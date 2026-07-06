@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لینک‌شیپ | اتصال پایدار</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0d1420;
+    --card-solid:#16203a;
+    --card: #16203a;
+    --line: #263049;
+    --signal: #46d9c8;
+    --signal-dim: #1f5f5a;
+    --amber: #f2b84b;
+    --red: #e8697a;
+    --text: #e9eef7;
+    --muted: #8a97ad;
+    --radius: 16px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -5%, #123832 0%, transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, #1a2440 0%, transparent 55%),
+      var(--bg);
+    color:var(--text);
+    font-family:"Vazirmatn", sans-serif;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px 90px;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:60px 0 36px; text-align:center;}
+  .signal-row{display:flex; justify-content:center; gap:10px; margin-bottom:24px;}
+  .bar{width:8px; background:linear-gradient(180deg,var(--signal),var(--signal-dim)); border-radius:4px;
+    animation:pulse 1.8s ease-in-out infinite; box-shadow:0 0 14px 0 rgba(70,217,200,.35);}
+  .bar:nth-child(1){height:16px;animation-delay:0s;}
+  .bar:nth-child(2){height:26px;animation-delay:.15s;}
+  .bar:nth-child(3){height:38px;animation-delay:.3s;}
+  .bar:nth-child(4){height:52px;animation-delay:.45s;}
+  .bar:nth-child(5){height:38px;animation-delay:.6s;}
+  .bar:nth-child(6){height:26px;animation-delay:.75s;}
+  .bar:nth-child(7){height:16px;animation-delay:.9s;}
+  @keyframes pulse{0%,100%{opacity:.35; transform:scaleY(.7);} 50%{opacity:1; transform:scaleY(1);}}
+  @media (prefers-reduced-motion: reduce){.bar{animation:none; opacity:.85;}}
+
+  .eyebrow{display:inline-block; font-size:13px; letter-spacing:.5px; color:var(--signal);
+    background:rgba(70,217,200,.08); border:1px solid rgba(70,217,200,.3); padding:5px 14px;
+    border-radius:999px; margin-bottom:20px;}
+  h1.title{font-size:42px; font-weight:900; margin:0 0 10px;
+    background:linear-gradient(90deg,#fff, #b9f3ea); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .subtitle{color:var(--muted); font-size:16px; max-width:520px; margin:0 auto 22px;}
+  .stats{display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;}
+  .stat{font-size:13px; color:var(--muted);}
+  .stat b{display:block; color:var(--text); font-size:19px; font-weight:700;}
+  .free-tag{margin-top:24px; display:inline-flex; align-items:center; gap:8px;
+    background:rgba(242,184,75,.1); border:1px solid rgba(242,184,75,.35); color:var(--amber);
+    padding:9px 18px; border-radius:12px; font-size:14px;}
+
+  /* ---------- ALERT ---------- */
+  .alert{margin-top:40px; background:rgba(232,105,122,.08); border:1px solid rgba(232,105,122,.35);
+    border-radius:var(--radius); padding:18px 20px; font-size:14px; color:#f4c3cb;}
+  .alert b{color:var(--red); display:block; margin-bottom:6px; font-size:14.5px;}
+
+  /* ---------- SECTIONS ---------- */
+  section{margin-top:52px;}
+  .section-head{display:flex; align-items:baseline; gap:12px; margin-bottom:20px;}
+  .section-head .dot{width:9px;height:9px;border-radius:50%; background:var(--signal);
+    box-shadow:0 0 10px 2px rgba(70,217,200,.5);}
+  .section-head h2{font-size:20px; margin:0; font-weight:700;}
+  .section-head span{color:var(--muted); font-size:13px;}
+
+  /* ---------- TOOL CARDS (details/summary) ---------- */
+  details.tool{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    margin-bottom:12px; overflow:hidden;}
+  details.tool[open]{border-color:rgba(70,217,200,.35);}
+  details.tool summary{list-style:none; cursor:pointer; padding:16px 18px; display:flex; align-items:center;
+    justify-content:space-between; gap:12px;}
+  details.tool summary::-webkit-details-marker{display:none;}
+  .s-left{display:flex; flex-direction:column; gap:3px;}
+  .s-name{font-weight:700; font-size:15.5px;}
+  .s-tag{font-size:12.5px; color:var(--muted);}
+  .chevron{color:var(--signal); font-size:13px; transition:transform .25s ease; flex-shrink:0;}
+  details.tool[open] .chevron{transform:rotate(180deg);}
+
+  .tool-body{padding:0 18px 20px; border-top:1px solid var(--line);}
+  .tool-body p{font-size:14px; color:#c9d3e2; margin:14px 0;}
+  .tool-body .note{font-size:13px; color:var(--muted); border-right:2px solid var(--signal-dim); padding-right:10px; margin:12px 0;}
+  .tool-body .warn-note{font-size:13px; color:var(--amber); border-right:2px solid var(--amber); padding-right:10px; margin:12px 0;}
+
+  .btn-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+  .btn{text-decoration:none; font-size:13px; font-weight:600; padding:9px 14px; border-radius:9px;
+    border:1px solid var(--line); color:var(--text); background:#1b2743; transition:all .2s ease;}
+  .btn:hover{border-color:var(--signal); color:var(--signal);}
+  .btn.primary{background:var(--signal); color:#08151a; border-color:var(--signal);}
+  .btn.primary:hover{opacity:.9; color:#08151a;}
+
+  ol.steps{margin:12px 0 0; padding-inline-start:20px; font-size:13.5px; color:#c9d3e2;}
+  ol.steps li{margin-bottom:7px;}
+  ol.steps li b{color:var(--signal);}
+
+  .subcode{margin-top:14px;}
+  .subcode summary{cursor:pointer; font-size:12.5px; color:var(--muted); padding:6px 0;}
+  code.link{display:block; font-size:11.5px; direction:ltr; text-align:left; background:#0e1626;
+    border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin-top:6px; color:#9fd8d0;
+    word-break:break-all; font-family:monospace;}
+
+  /* ---------- APN CARD ---------- */
+  .tut-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px 22px;}
+  .tut-card h3{margin:0 0 4px; font-size:16.5px; color:var(--amber);}
+  .tut-card .lead{color:var(--muted); font-size:13.5px; margin:0 0 14px;}
+  .tut-card .note{font-size:13px; color:var(--muted); border-top:1px dashed var(--line); padding-top:14px; margin-top:16px;}
+  .video-note{margin-top:14px; font-size:13px; color:var(--muted); display:flex; gap:8px; flex-wrap:wrap;}
+  .video-pill{background:#1b2743; border:1px solid var(--line); border-radius:8px; padding:7px 12px; font-size:12.5px;}
+
+  footer{margin-top:64px; text-align:center; color:var(--muted); font-size:13px;
+    border-top:1px solid var(--line); padding-top:24px;}
+  footer b{color:var(--text);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="hero">
+    <div class="signal-row">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <span class="eyebrow">کانال تلگرام عمومی</span>
+    <h1 class="title">لینک‌شیپ LinkShip</h1>
+    <p class="subtitle">اتصال خود را پایدار نگه دارید — مجموعه‌ای از فیلترشکن‌ها، پیام‌رسان‌های بدون فیلتر و آموزش‌های اتصال به اینترنت.</p>
+    <div class="stats">
+      <div class="stat"><b>۴۵</b>عکس</div>
+      <div class="stat"><b>۱۳</b>ویدیو</div>
+      <div class="stat"><b>۲۰</b>فایل</div>
+      <div class="stat"><b>۲۷</b>لینک</div>
+    </div>
+    <div class="free-tag">⭐ تمام محتوای کانال کاملاً رایگان است</div>
+  </div>
+
+  <div class="alert">
+    <b>🚨 نکته مهم قبل از شروع</b>
+    عملکرد هر فیلترشکن بسته به اپراتور و موقعیت مکانی شما متفاوت است. اگر یکی از فیلترها برایتان کار نکرد ناامید نشوید؛ گزینه‌ی دیگری را امتحان کنید تا بهترین نتیجه را بگیرید.
+  </div>
+
+  <!-- ================= FILTERS ================= -->
+  <section>
+    <div class="section-head">
+      <div class="dot"></div>
+      <h2>فیلترشکن‌های معرفی‌شده</h2>
+      <span>روی هرکدام بزنید تا جزئیات و لینک‌های دانلود باز شود</span>
+    </div>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">مهسا ان‌جی (MahsaNG)</span><span class="s-tag">اندروید</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>یک فیلترشکن بسیار قوی و قدرتمند که در حال حاضر فقط برای اندروید ارائه می‌شود.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.MahsaNet.MahsaNG" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://github.com/GFW-knocker/MahsaNG/releases" target="_blank" rel="noopener">صفحه گیت‌هاب (آخرین نسخه)</a>
+        </div>
+        <p class="note">راهنما: بعد از کپی‌کردن لینک ساب، در v2rayNG یا مهسا ان‌جی وارد شوید → روی «+» بزنید → «Update Subscription» را انتخاب کنید → از منوی سه‌نقطه گزینه‌ی تست پینگ و سپس مرتب‌سازی بر اساس نتیجه‌ی تست را بزنید و سریع‌ترین کانفیگ را وصل کنید.</p>
+        <details class="subcode">
+          <summary>لینک‌های ساب مهسا (برای v2rayNG / MahsaNG / Hiddify / Streisand)</summary>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_1.txt</code>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt</code>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt</code>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt</code>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt</code>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt</code>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt</code>
+          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt</code>
+        </details>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">استریسند (Streisand)</span><span class="s-tag">iOS / آیفون و آیپد</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>کلاینتی برای سیستم‌عامل iOS که با همان لینک‌های ساب مهسا کار می‌کند.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://apps.apple.com/us/app/streisand/id6450534064" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+        </div>
+        <ol class="steps">
+          <li>پس از نصب برنامه و کپی‌کردن لینک ساب، وارد برنامه شوید.</li>
+          <li>روی <b>سه‌نقطه</b> بالای صفحه بزنید و <b>Import from Clipboard</b> را انتخاب کنید.</li>
+          <li>گزینه‌ی <b>Update</b> را بزنید تا کانفیگ‌ها اضافه شوند.</li>
+          <li>روی <b>Latency</b> بزنید و پس از پایان تست، کانفیگ‌های غیرفعال را حذف کنید.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">هیدیفای (Hiddify)</span><span class="s-tag">اندروید، ویندوز، مک، لینوکس، iOS</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>«راهکار آزادی اینترنت» — یک فیلترشکن قوی و چندسکویی.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=app.hiddify.com&hl=en" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
+          <a class="btn" href="https://github.com/hiddify/hiddify-next/releases/download/v2.0.5/Hiddify-Android-universal.apk" target="_blank" rel="noopener">دانلود مستقیم APK اندروید (universal)</a>
+          <a class="btn" href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://github.com/hiddify/hiddify-next/releases/download/v2.0.5/Hiddify-Windows-Setup-x64.exe" target="_blank" rel="noopener">نصب‌کننده ویندوز (۶۴ بیتی)</a>
+          <a class="btn" href="https://github.com/hiddify/hiddify-next/releases" target="_blank" rel="noopener">صفحه گیت‌هاب (آخرین نسخه‌ها)</a>
+        </div>
+        <ol class="steps">
+          <li>بعد از کپی‌کردن لینک ساب، می‌توانید روی <b>Add from clipboard</b> بزنید، یا:</li>
+          <li>روی آیکون <b>+</b> بالای صفحه بزنید و <b>Manual Entry</b> را انتخاب کنید.</li>
+          <li>یک نام دلخواه بگذارید و لینک ساب را جای‌گذاری کنید.</li>
+          <li>بازه‌ی آپدیت خودکار را تعیین کنید (پیشنهاد: ۹۶ ساعت) و ذخیره کنید.</li>
+          <li>برنامه را استارت بزنید، وارد <b>Proxies</b> شوید و از منوی سه‌نقطه <b>By Delay</b> را انتخاب کنید تا کانفیگ‌ها بر اساس پینگ مرتب شوند.</li>
+          <li>روی دکمه‌ی صاعقه بزنید تا تست پینگ انجام شود و بهترین کانفیگ به‌صورت خودکار یا دستی انتخاب شود.</li>
+        </ol>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">اوبلیوین (Oblivion)</span><span class="s-tag">اندروید و دسکتاپ</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>فیلترشکنی بر پایه‌ی Cloudflare WARP، در حال حاضر فقط برای اندروید و دسکتاپ موجود است.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=org.bepass.oblivion" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
+          <a class="btn" href="https://github.com/bepass-org/oblivion/releases/download/v7/oblivion-v7-signed.apk" target="_blank" rel="noopener">دانلود مستقیم APK اندروید</a>
+          <a class="btn" href="https://github.com/bepass-org/oblivion-desktop/releases/download/v2.61.0/oblivion-desktop-win-x64.exe" target="_blank" rel="noopener">نسخه دسکتاپ ویندوز (۶۴ بیتی)</a>
+          <a class="btn" href="https://github.com/bepass-org/oblivion/releases" target="_blank" rel="noopener">گیت‌هاب اندروید</a>
+          <a class="btn" href="https://github.com/bepass-org/oblivion-desktop/releases" target="_blank" rel="noopener">گیت‌هاب دسکتاپ</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">دریافت پروکسی تلگرام</span><span class="s-tag">بدون نیاز به فیلترشکن</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>روشی برای گرفتن پروکسی تلگرام بدون نیاز به نصب فیلترشکن.</p>
+        <ol class="steps">
+          <li>لینک زیر را در مرورگر باز کنید و متن نمایش‌داده‌شده را کپی کنید.</li>
+          <li>به تلگرام برگردید، متن را برای شخصی یا در «پیام‌های ذخیره‌شده» با نگه‌داشتن انگشت و انتخاب Paste ارسال کنید.</li>
+          <li>روی پروکسی‌های نمایش‌داده‌شده در پیام ضربه بزنید و متصل شوید.</li>
+        </ol>
+        <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/refs/heads/main/telegram/index.json</code>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">۱.۱.۱.۱ (Cloudflare)</span><span class="s-tag">اندروید، iOS، ویندوز و بیشتر</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>ابزار DNS/VPN رایگان کلادفلر بر پایه‌ی شبکه‌ی WARP؛ اتصال سریع و پایدار به هر جایی که بروید.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://1111-releases.cloudflareclient.com/win/latest" target="_blank" rel="noopener">نسخه ویندوز</a>
+          <a class="btn" href="https://apkpure.com/1-1-1-1-warp-safer-internet/com.cloudflare.onedotonedotonedotone" target="_blank" rel="noopener">APKPure (جایگزین)</a>
+          <a class="btn" href="https://1-1-1-1.en.uptodown.com/android" target="_blank" rel="noopener">Uptodown (جایگزین)</a>
+          <a class="btn" href="https://one.one.one.one" target="_blank" rel="noopener">وب‌سایت رسمی (لینوکس، مک و...)</a>
+        </div>
+        <p class="warn-note">اگر گوگل پلی پیام «این برنامه در کشور شما در دسترس نمی‌باشد» نشان داد، از مارکت‌های جایگزین بالا (APKPure یا Uptodown) استفاده کنید.</p>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">بگذر (Begzar VPN)</span><span class="s-tag">اندروید</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>فیلترشکنی ساده، امن و سریع؛ نسخه‌ای بر پایه‌ی کانفیگ‌های رایگان مهسا ان‌جی، کانال‌های تلگرامی و چند سرور اهدایی. دارای اتصال خودکار و سرورهای رایگان سریع.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://github.com/Begzar/BegzarApp/releases/download/v5.5.0/begzar-universal-5.5.0.apk" target="_blank" rel="noopener">دانلود مستقیم APK (نسخه ۵.۵.۰)</a>
+          <a class="btn" href="https://github.com/Begzar/BegzarApp/releases" target="_blank" rel="noopener">گیت‌هاب (آخرین نسخه)</a>
+          <a class="btn" href="https://begzar.xyz/" target="_blank" rel="noopener">وب‌سایت رسمی</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">Cloudflare One Agent</span><span class="s-tag">اندروید و iOS</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>ابزار ضد سانسور و ضد فیلترینگ از شرکت کلادفلر؛ دسترسی به محتوای مسدودشده بدون افت سرعت محسوس.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://apkpure.com/cloudflare-one-agent/com.cloudflare.cloudflareoneagent" target="_blank" rel="noopener">APKPure (جایگزین)</a>
+        </div>
+        <p class="warn-note">در صورت مسدودبودن گوگل پلی، از مارکت جایگزین بالا استفاده کنید.</p>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">آرگو وی‌پی‌ان (ArgoVPN)</span><span class="s-tag">اندروید — نسخه ۲.۴</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>برنامه‌ی وی‌پی‌انی رایگان و بدون محدودیت حجمی برای اندروید.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://s3.amazonaws.com/argovpn/argovpn-universal.apk" target="_blank" rel="noopener">دانلود مستقیم APK</a>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.filtershekanha.argovpn" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://s3.amazonaws.com/argovpn/argovpn-network/index.html" target="_blank" rel="noopener">راهنمای استفاده (وب)</a>
+        </div>
+        <p class="note">در اندروید ۱۳ به بعد، نمایش نوتیفیکیشن برنامه منوط به اجازه‌ی مستقیم کاربر است؛ در صورت ندادن این مجوز، برنامه نوتیفیکیشنی نشان نمی‌دهد.</p>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">اوستریچ (Ostrich VPN)</span><span class="s-tag">اندروید — نسخه ۲.۴.۱</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>پرسرعت، بدون قطعی، رایگان و مناسب تمام اپراتورها (از جمله همراه اول). دارای محیط کاربری ساده بدون نیاز به تنظیمات خاص و اتصال آنی. این برنامه توسط سازنده‌اش تبلیغات نمایش می‌دهد.</p>
+        <p class="note">پروتکل‌های موجود: Auto ⭐، IKEv2، Vmess ⭐، OpenVPN، WebSocket. برای اتصال بهتر از Auto یا Vmess استفاده کنید. سرورها و لوکیشن‌های متعددی به‌صورت رایگان در دسترس است.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.best.free.vpn.proxy" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://www.ostrichvpn.net/download/android/vpnkt-v2.4.1(283)-release.apk" target="_blank" rel="noopener">دانلود مستقیم APK</a>
+          <a class="btn" href="https://apps.apple.com/us/developer/geware-technology-limited/id1461689857" target="_blank" rel="noopener">صفحه‌ی سازنده در اپ‌استور (iOS)</a>
+          <a class="btn" href="https://www.ostrichvpn.net/" target="_blank" rel="noopener">وب‌سایت رسمی</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">گف (Geph)</span><span class="s-tag">ویندوز، اندروید، لینوکس، مک، iOS</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>رایگان، دارای رمزگذاری ترافیک و سرورهای متعدد؛ متصل برای تمام اپراتورها. برای استفاده نیاز به ساخت حساب کاربری (نام کاربری و پسورد) دارید.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=io.geph.android" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
+          <a class="btn" href="https://dl.geph.io/geph-releases/android-stable/4.99.17/geph-android.apk" target="_blank" rel="noopener">دانلود مستقیم APK اندروید</a>
+          <a class="btn" href="https://apps.apple.com/us/app/geph/id1638148282?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://dl.geph.io/geph-releases/windows-stable/4.99.17/geph-windows-setup.exe" target="_blank" rel="noopener">نصب‌کننده ویندوز</a>
+          <a class="btn" href="http://geph.io/" target="_blank" rel="noopener">وب‌سایت رسمی</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">امنزیا (AmneziaVPN)</span><span class="s-tag">اندروید، iOS، ویندوز</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <div class="btn-row">
+          <a class="btn primary" href="https://apps.apple.com/us/app/amneziavpn/id1600529900" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=org.amnezia.vpn" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
+          <a class="btn" href="https://github.com/amnezia-vpn/amnezia-client/releases" target="_blank" rel="noopener">گیت‌هاب (همه نسخه‌ها)</a>
+          <a class="btn" href="https://github.com/amnezia-vpn/amnezia-client/releases/download/4.8.3.1/AmneziaVPN_4.8.3.1_x64.exe" target="_blank" rel="noopener">نصب‌کننده ویندوز</a>
+        </div>
+        <ol class="steps">
+          <li>ابتدا در کانال خبری amnezia_vpn_news_ir عضو شوید.</li>
+          <li>سپس یکی از ربات‌های دریافت کانفیگ رایگان را پیام دهید تا یک کانفیگ برایتان ارسال شود؛ برای مثال ربات <b>amnezia_free_iran_bot</b> (یا نسخه‌های مخصوص میانمار و قرقیزستان).</li>
+          <li>کانفیگ ارسالی را کپی کنید، برنامه را باز کنید، روی «+» بزنید، گزینه‌ی <b>Insert</b> را بزنید و سپس <b>Continue</b> را انتخاب کنید.</li>
+          <li>روی دایره‌ی وسط صفحه با متن <b>Connect</b> بزنید و منتظر بمانید تا فیلترشکن متصل شود.</li>
+        </ol>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= MESSENGERS ================= -->
+  <section>
+    <div class="section-head">
+      <div class="dot"></div>
+      <h2>پیام‌رسان‌های بدون فیلتر</h2>
+      <span>گزینه‌های جایگزین برای ارتباط تیمی و شخصی در ایران</span>
+    </div>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">گوگل چت (Google Chat)</span><span class="s-tag">فیلتر نیست</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>در حال حاضر در ایران فیلتر نیست و ارتباط پایداری فراهم می‌کند. فقط کافی است یک حساب گوگل (جیمیل) داشته باشید. این برنامه پیش‌تر با نام «هنگوتس» شناخته می‌شد.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.google.android.apps.dynamite&hl=en" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://myket.ir/app/com.google.android.apps.dynamite" target="_blank" rel="noopener">مایکت</a>
+          <a class="btn" href="https://cafebazaar.ir/app/com.google.android.apps.dynamite" target="_blank" rel="noopener">کافه‌بازار</a>
+          <a class="btn" href="https://apps.apple.com/us/app/google-chat/id1163852619?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://mail.google.com/chat" target="_blank" rel="noopener">نسخه‌ی وب</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">گوگل میت (Google Meet)</span><span class="s-tag">فیلتر نیست</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>مانند گوگل چت، در حال حاضر فیلتر نیست. اگر نسخه‌ی پیش‌فرض روی گوشی شما نصب است، احتمالاً قدیمی است — برای عملکرد بهتر آن را به آخرین نسخه به‌روزرسانی کنید.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.google.android.apps.tachyon&hl=en" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://myket.ir/app/com.google.android.apps.tachyon" target="_blank" rel="noopener">مایکت</a>
+          <a class="btn" href="https://cafebazaar.ir/app/com.google.android.apps.tachyon" target="_blank" rel="noopener">کافه‌بازار</a>
+          <a class="btn" href="https://apps.apple.com/us/app/google-meet/id1096918571?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://meet.google.com/calling" target="_blank" rel="noopener">نسخه‌ی وب</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">المنت (Element)</span><span class="s-tag">پیام‌رسان امن</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>پیام‌رسانی امن شبیه تلگرام، با این تفاوت که ورود از طریق ایمیل انجام می‌شود (نیازی به شماره تلفن نیست). فیلترکردن آن بسیار دشوار است، چون سرورهای جایگزین متعددی دارد که فیلترینگ را دور می‌زند — در حال حاضر هرچند فیلتر شده، همچنان به‌خوبی کار می‌کند.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=im.vector.app" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://apps.apple.com/us/app/element-messenger/id1083446067" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://packages.riot.im/desktop/install/win32/x64/Element%20Setup.exe" target="_blank" rel="noopener">نسخه دسکتاپ ویندوز (۶۴ بیتی)</a>
+        </div>
+        <p class="warn-note">ممکن است لینک‌های دانلود برایتان فیلتر باشد؛ قبل از دانلود فیلترشکن خود را روشن کنید.</p>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">واتس‌اپ (WhatsApp)</span><span class="s-tag">متعلق به متا</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>پیام‌رسان شناخته‌شده در سراسر دنیا با میلیون‌ها کاربر فعال، متعلق به شرکت متا (فیسبوک سابق)؛ برای اندروید، iOS، ویندوز و مک در دسترس است.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.whatsapp" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://myket.ir/app/com.whatsapp" target="_blank" rel="noopener">مایکت</a>
+          <a class="btn" href="https://cafebazaar.ir/app/com.whatsapp" target="_blank" rel="noopener">کافه‌بازار</a>
+          <a class="btn" href="https://apps.microsoft.com/detail/9nksqgp7f2nh?hl=en-us&gl=US" target="_blank" rel="noopener">مایکروسافت استور (ویندوز)</a>
+          <a class="btn" href="https://www.whatsapp.com/download" target="_blank" rel="noopener">نسخه دسکتاپ (ویندوز و مک)</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">تلگرام (پیام‌رسان اصلی)</span><span class="s-tag">اندروید، iOS، دسکتاپ</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>پیام‌رسانی سریع، ساده و ایمن با امکاناتی مثل تماس صوتی و تصویری، ساخت کانال و گروه، ارسال فایل‌های حجیم و رمزگذاری اطلاعات.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=org.telegram.messenger" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
+          <a class="btn" href="https://apps.apple.com/us/app/telegram-messenger/id686449807" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://desktop.telegram.org/" target="_blank" rel="noopener">نسخه دسکتاپ (ویندوز، لینوکس، مک)</a>
+        </div>
+      </div>
+    </details>
+
+    <details class="tool">
+      <summary><div class="s-left"><span class="s-name">مایکروسافت تیمز (Microsoft Teams)</span><span class="s-tag">ابزار تیمی</span></div><span class="chevron">▾</span></summary>
+      <div class="tool-body">
+        <p>ابزاری برای ساماندهی فعالیت‌های تیمی، ارتباط مؤثر میان اعضا و اشتراک‌گذاری فایل؛ دارای رابط کاربری ساده، پشتیبانی از تماس صوتی/تصویری و چت گروهی.</p>
+        <div class="btn-row">
+          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.microsoft.teams&hl=en" target="_blank" rel="noopener">گوگل پلی</a>
+          <a class="btn" href="https://myket.ir/app/com.microsoft.teams" target="_blank" rel="noopener">مایکت</a>
+          <a class="btn" href="https://cafebazaar.ir/app/com.microsoft.teams" target="_blank" rel="noopener">کافه‌بازار</a>
+          <a class="btn" href="https://apps.apple.com/us/app/microsoft-teams/id1113153706?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
+          <a class="btn" href="https://www.microsoft.com/en-us/microsoft-teams/download-app" target="_blank" rel="noopener">نسخه دسکتاپ (ویندوز)</a>
+          <a class="btn" href="https://www.microsoft.com/en-us/microsoft-teams/log-in" target="_blank" rel="noopener">نسخه تحت وب</a>
+        </div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ================= APN TUTORIAL ================= -->
+  <section>
+    <div class="section-head">
+      <div class="dot"></div>
+      <h2>آموزش‌ها</h2>
+      <span>تنظیمات و راهنمای رفع مشکل اتصال</span>
+    </div>
+    <div class="tut-card">
+      <h3>تنظیم صحیح APN در تلفن همراه</h3>
+      <p class="lead">مخصوص کسانی که اینترنت‌شان ضعیف است یا نمی‌توانند به کانفیگ‌ها وصل شوند.</p>
+      <ol class="steps">
+        <li>وارد <b>تنظیمات</b> شوید و گزینه‌ی شبکه‌های تلفن‌همراه را باز کنید.</li>
+        <li>به بخش <b>سیم‌کارت‌ها</b> بروید و سیم‌کارت فعال برای اینترنت را انتخاب کنید.</li>
+        <li>روی <b>نام‌های نقطه دسترسی (APN)</b> بزنید.</li>
+        <li>گزینه‌ی <b>افزودن / +</b> را انتخاب کنید تا یک APN جدید بسازید.</li>
+        <li>فقط دو فیلد <b>Name</b> و <b>APN</b> را پر کنید (مثلاً هر دو را «bahram» بگذارید) و فیلدهای پروکسی و پورت را خالی رها کنید — در هر اپراتوری که هستید نام دلخواه مهم نیست.</li>
+        <li>روی <b>More</b> و سپس <b>Save</b> بزنید، APN تازه‌ساخته را انتخاب و به اینترنت وصل شوید.</li>
+      </ol>
+      <div class="note">نکته: فیلد Proxy در همه‌ی اپراتورها باید خالی بماند. نکته‌ی دیگر: گوشی را از حالت رومینگ خارج کنید.</div>
+      <div class="video-note">
+        <span class="video-pill">🎬 آموزش تصویری افزایش سرعت اینترنت — شماره ۱</span>
+        <span class="video-pill">🎬 آموزش تصویری افزایش سرعت اینترنت — شماره ۲</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    برگرفته از محتوای عمومی کانال <b>LinkShip لینک‌شیپ</b> — همه‌ی خدمات این کانال رایگان است.<br>
+    عملکرد هر فیلترشکن به اپراتور و شرایط شبکه‌ی شما بستگی دارد؛ اگر گزینه‌ای کار نکرد، گزینه‌ی دیگری را امتحان کنید.
+  </footer>
+
+</div>
+</body>
+</html>
