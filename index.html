@@ -3,470 +3,993 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>لینک‌شیپ | اتصال پایدار</title>
+<title>مسیر آزاد | ابزارهای اتصال، فیلترشکن و پیام‌رسان</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg: #0d1420;
-    --card-solid:#16203a;
-    --card: #16203a;
-    --line: #263049;
-    --signal: #46d9c8;
-    --signal-dim: #1f5f5a;
-    --amber: #f2b84b;
-    --red: #e8697a;
-    --text: #e9eef7;
-    --muted: #8a97ad;
-    --radius: 16px;
-  }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(ellipse 900px 500px at 15% -5%, #123832 0%, transparent 60%),
-      radial-gradient(ellipse 700px 500px at 100% 10%, #1a2440 0%, transparent 55%),
-      var(--bg);
-    color:var(--text);
-    font-family:"Vazirmatn", sans-serif;
-    line-height:1.9;
-    -webkit-font-smoothing:antialiased;
-  }
-  .wrap{max-width:880px;margin:0 auto;padding:0 20px 90px;}
+:root{
+  --bg:#f5f8fa;
+  --surface:#ffffff;
+  --surface-2:#eef3f6;
+  --ink:#12222f;
+  --ink-soft:#4c6270;
+  --ink-faint:#8a9aa5;
+  --line:#dfe7eb;
+  --navy:#0f3556;
+  --navy-deep:#0a2740;
+  --teal:#158f82;
+  --teal-soft:#e4f5f2;
+  --amber:#e8993a;
+  --amber-soft:#fdf1e0;
+  --danger:#c14a4a;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow-sm:0 1px 2px rgba(15,53,86,.06);
+  --shadow-md:0 8px 24px -8px rgba(15,53,86,.16);
+  --shadow-lg:0 24px 56px -16px rgba(15,53,86,.22);
+  --maxw:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Vazirmatn',sans-serif;
+  -webkit-font-smoothing:antialiased;
+  line-height:1.75;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none}
+.mono{font-family:'JetBrains Mono',monospace;direction:ltr;unicode-bidi:plaintext}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 
-  /* ---------- HERO ---------- */
-  .hero{padding:60px 0 36px; text-align:center;}
-  .signal-row{display:flex; justify-content:center; gap:10px; margin-bottom:24px;}
-  .bar{width:8px; background:linear-gradient(180deg,var(--signal),var(--signal-dim)); border-radius:4px;
-    animation:pulse 1.8s ease-in-out infinite; box-shadow:0 0 14px 0 rgba(70,217,200,.35);}
-  .bar:nth-child(1){height:16px;animation-delay:0s;}
-  .bar:nth-child(2){height:26px;animation-delay:.15s;}
-  .bar:nth-child(3){height:38px;animation-delay:.3s;}
-  .bar:nth-child(4){height:52px;animation-delay:.45s;}
-  .bar:nth-child(5){height:38px;animation-delay:.6s;}
-  .bar:nth-child(6){height:26px;animation-delay:.75s;}
-  .bar:nth-child(7){height:16px;animation-delay:.9s;}
-  @keyframes pulse{0%,100%{opacity:.35; transform:scaleY(.7);} 50%{opacity:1; transform:scaleY(1);}}
-  @media (prefers-reduced-motion: reduce){.bar{animation:none; opacity:.85;}}
+/* ===== background route texture ===== */
+.route-bg{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(900px 500px at 85% -8%, rgba(21,143,130,.08), transparent 60%),
+    radial-gradient(700px 460px at 6% 8%, rgba(15,53,86,.06), transparent 60%),
+    var(--bg);
+}
 
-  .eyebrow{display:inline-block; font-size:13px; letter-spacing:.5px; color:var(--signal);
-    background:rgba(70,217,200,.08); border:1px solid rgba(70,217,200,.3); padding:5px 14px;
-    border-radius:999px; margin-bottom:20px;}
-  h1.title{font-size:42px; font-weight:900; margin:0 0 10px;
-    background:linear-gradient(90deg,#fff, #b9f3ea); -webkit-background-clip:text; background-clip:text; color:transparent;}
-  .subtitle{color:var(--muted); font-size:16px; max-width:520px; margin:0 auto 22px;}
-  .stats{display:flex; gap:24px; justify-content:center; flex-wrap:wrap; margin-bottom:8px;}
-  .stat{font-size:13px; color:var(--muted);}
-  .stat b{display:block; color:var(--text); font-size:19px; font-weight:700;}
-  .free-tag{margin-top:24px; display:inline-flex; align-items:center; gap:8px;
-    background:rgba(242,184,75,.1); border:1px solid rgba(242,184,75,.35); color:var(--amber);
-    padding:9px 18px; border-radius:12px; font-size:14px;}
+/* ===== top nav ===== */
+header.site{
+  position:sticky;top:0;z-index:50;
+  background:rgba(245,248,250,.86);
+  backdrop-filter:blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  height:72px;
+}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:1.18rem;color:var(--navy-deep)}
+.brand .mark{
+  width:34px;height:34px;border-radius:9px;
+  background:linear-gradient(155deg,var(--navy) 0%, var(--teal) 130%);
+  position:relative;flex:none;
+}
+.brand .mark::before{
+  content:"";position:absolute;inset:9px 6px;
+  border-right:2px solid #fff;border-bottom:2px solid #fff;
+  transform:rotate(-45deg) translate(1px,-1px);
+  border-radius:0 0 3px 0;
+}
+.brand small{display:block;font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;color:var(--teal);font-weight:600;margin-top:1px}
+nav.links{display:flex;gap:30px;font-weight:600;font-size:.95rem;color:var(--ink-soft)}
+nav.links a{position:relative;padding:6px 2px;transition:color .2s}
+nav.links a:hover{color:var(--navy-deep)}
+.nav-cta{
+  display:flex;align-items:center;gap:8px;
+  background:var(--navy-deep);color:#fff;font-weight:700;font-size:.88rem;
+  padding:10px 18px;border-radius:999px;
+  box-shadow:var(--shadow-sm);
+  transition:transform .18s, box-shadow .18s;
+}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.menu-btn{display:none;width:40px;height:40px;border-radius:10px;background:var(--surface-2);align-items:center;justify-content:center}
+.menu-btn span, .menu-btn span::before, .menu-btn span::after{
+  content:"";display:block;width:18px;height:2px;background:var(--navy-deep);border-radius:2px;position:relative;
+}
+.menu-btn span::before{position:absolute;top:-6px}
+.menu-btn span::after{position:absolute;top:6px}
 
-  /* ---------- ALERT ---------- */
-  .alert{margin-top:40px; background:rgba(232,105,122,.08); border:1px solid rgba(232,105,122,.35);
-    border-radius:var(--radius); padding:18px 20px; font-size:14px; color:#f4c3cb;}
-  .alert b{color:var(--red); display:block; margin-bottom:6px; font-size:14.5px;}
+/* ===== hero ===== */
+.hero{padding:76px 0 40px;position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.12em;
+  color:var(--teal);background:var(--teal-soft);
+  padding:6px 14px;border-radius:999px;font-weight:600;margin-bottom:22px;
+}
+.eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 4px rgba(21,143,130,.18)}
+h1.h-hero{
+  font-size:clamp(2.1rem,4vw,3.35rem);
+  font-weight:900;letter-spacing:-.02em;line-height:1.28;
+  color:var(--navy-deep);margin:0 0 22px;
+}
+h1.h-hero em{
+  font-style:normal;color:var(--teal);
+  background:linear-gradient(0deg, rgba(21,143,130,.16) 0%, rgba(21,143,130,.16) 32%, transparent 32%);
+}
+.hero p.lead{font-size:1.08rem;color:var(--ink-soft);max-width:520px;margin:0 0 34px}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  font-weight:700;font-size:.94rem;padding:13px 24px;border-radius:12px;
+  transition:transform .18s ease, box-shadow .18s ease, background .18s;
+}
+.btn-primary{background:var(--navy-deep);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+.btn-ghost{background:var(--surface);color:var(--navy-deep);border:1px solid var(--line)}
+.btn-ghost:hover{border-color:var(--teal);color:var(--teal)}
+.hero-stats{display:flex;gap:28px;margin-top:40px;flex-wrap:wrap}
+.hero-stats div{min-width:96px}
+.hero-stats b{display:block;font-size:1.5rem;font-weight:800;color:var(--navy-deep)}
+.hero-stats span{font-size:.8rem;color:var(--ink-faint)}
 
-  /* ---------- SECTIONS ---------- */
-  section{margin-top:52px;}
-  .section-head{display:flex; align-items:baseline; gap:12px; margin-bottom:20px;}
-  .section-head .dot{width:9px;height:9px;border-radius:50%; background:var(--signal);
-    box-shadow:0 0 10px 2px rgba(70,217,200,.5);}
-  .section-head h2{font-size:20px; margin:0; font-weight:700;}
-  .section-head span{color:var(--muted); font-size:13px;}
+/* route/signature svg panel */
+.route-panel{
+  background:var(--surface);border:1px solid var(--line);
+  border-radius:22px;padding:26px 22px 22px;box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.route-panel h3{margin:0 0 4px;font-size:1rem;font-weight:800;color:var(--navy-deep)}
+.route-panel p{margin:0 0 18px;font-size:.83rem;color:var(--ink-faint)}
+.route-svg-holder{width:100%}
+.route-node-label{font-family:'Vazirmatn';font-size:12.5px;font-weight:700;fill:var(--navy-deep)}
+.route-node-sub{font-family:'JetBrains Mono';font-size:8.5px;fill:var(--ink-faint);letter-spacing:.03em}
 
-  /* ---------- TOOL CARDS (details/summary) ---------- */
-  details.tool{background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
-    margin-bottom:12px; overflow:hidden;}
-  details.tool[open]{border-color:rgba(70,217,200,.35);}
-  details.tool summary{list-style:none; cursor:pointer; padding:16px 18px; display:flex; align-items:center;
-    justify-content:space-between; gap:12px;}
-  details.tool summary::-webkit-details-marker{display:none;}
-  .s-left{display:flex; flex-direction:column; gap:3px;}
-  .s-name{font-weight:700; font-size:15.5px;}
-  .s-tag{font-size:12.5px; color:var(--muted);}
-  .chevron{color:var(--signal); font-size:13px; transition:transform .25s ease; flex-shrink:0;}
-  details.tool[open] .chevron{transform:rotate(180deg);}
+/* ===== section shell ===== */
+section.block{padding:64px 0}
+.block-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:36px;flex-wrap:wrap}
+.block-head h2{
+  font-size:clamp(1.5rem,2.6vw,2.05rem);font-weight:850;color:var(--navy-deep);margin:0 0 8px;letter-spacing:-.01em;
+}
+.block-head p{margin:0;color:var(--ink-soft);max-width:560px;font-size:.97rem}
+.block-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.14em;font-weight:600;
+  color:var(--ink-faint);text-transform:uppercase;
+}
+.block-index{
+  font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--line);font-size:2.6rem;line-height:1;
+}
 
-  .tool-body{padding:0 18px 20px; border-top:1px solid var(--line);}
-  .tool-body p{font-size:14px; color:#c9d3e2; margin:14px 0;}
-  .tool-body .note{font-size:13px; color:var(--muted); border-right:2px solid var(--signal-dim); padding-right:10px; margin:12px 0;}
-  .tool-body .warn-note{font-size:13px; color:var(--amber); border-right:2px solid var(--amber); padding-right:10px; margin:12px 0;}
+/* divider route */
+.route-divider{display:flex;align-items:center;gap:14px;margin:6px 0 44px;color:var(--ink-faint)}
+.route-divider .ln{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--line) 0 6px, transparent 6px 12px)}
+.route-divider .pt{width:9px;height:9px;border-radius:50%;background:var(--teal);flex:none;box-shadow:0 0 0 5px var(--teal-soft)}
 
-  .btn-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
-  .btn{text-decoration:none; font-size:13px; font-weight:600; padding:9px 14px; border-radius:9px;
-    border:1px solid var(--line); color:var(--text); background:#1b2743; transition:all .2s ease;}
-  .btn:hover{border-color:var(--signal); color:var(--signal);}
-  .btn.primary{background:var(--signal); color:#08151a; border-color:var(--signal);}
-  .btn.primary:hover{opacity:.9; color:#08151a;}
+/* ===== cards grid ===== */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px;display:flex;flex-direction:column;gap:14px;
+  transition:box-shadow .2s ease, transform .2s ease, border-color .2s;
+  position:relative;
+}
+.card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:#c9dde1}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.icon-badge{
+  width:46px;height:46px;border-radius:12px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--navy-deep);color:#fff;
+}
+.icon-badge.teal{background:var(--teal)}
+.icon-badge.amber{background:var(--amber)}
+.icon-badge svg{width:22px;height:22px}
+.free-pill{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.08em;font-weight:700;
+  color:var(--teal);background:var(--teal-soft);padding:4px 9px;border-radius:999px;height:fit-content;
+}
+.card h3{margin:0;font-size:1.12rem;font-weight:800;color:var(--navy-deep)}
+.card h3 .en{display:block;font-family:'JetBrains Mono',monospace;font-size:.68rem;color:var(--ink-faint);font-weight:600;margin-top:3px;letter-spacing:.02em}
+.card p.desc{margin:0;color:var(--ink-soft);font-size:.89rem;flex:1}
+.platform-row{display:flex;gap:6px;flex-wrap:wrap}
+.plat{
+  font-family:'JetBrains Mono',monospace;font-size:.63rem;letter-spacing:.05em;font-weight:600;
+  color:var(--ink-soft);background:var(--surface-2);padding:4px 9px;border-radius:7px;
+}
+.link-row{display:flex;flex-direction:column;gap:8px;margin-top:6px}
+.link-row .more{
+  display:flex;flex-wrap:wrap;gap:8px;
+}
+.dl{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.83rem;font-weight:700;color:#fff;background:var(--navy-deep);
+  padding:9px 14px;border-radius:9px;justify-content:center;
+  transition:background .18s, transform .15s;
+}
+.dl:hover{background:var(--teal);transform:translateY(-1px)}
+.dl.sec{
+  background:var(--surface-2);color:var(--navy-deep);
+}
+.dl.sec:hover{background:#e0edee;color:var(--teal)}
+.dl svg{width:14px;height:14px;flex:none}
+.tut-btn{
+  display:inline-flex;align-items:center;gap:7px;
+  font-size:.83rem;font-weight:700;color:var(--amber);background:var(--amber-soft);
+  padding:9px 14px;border-radius:9px;justify-content:center;align-self:stretch;
+  transition:filter .15s;
+}
+.tut-btn:hover{filter:brightness(.94)}
+.tut-btn svg{width:15px;height:15px}
 
-  ol.steps{margin:12px 0 0; padding-inline-start:20px; font-size:13.5px; color:#c9d3e2;}
-  ol.steps li{margin-bottom:7px;}
-  ol.steps li b{color:var(--signal);}
+/* messenger cards - list style */
+.msg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.msg-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:22px;display:flex;gap:16px;align-items:flex-start;
+  transition:border-color .2s, box-shadow .2s;
+}
+.msg-card:hover{border-color:#c9dde1;box-shadow:var(--shadow-sm)}
+.msg-icon{
+  width:42px;height:42px;border-radius:11px;background:var(--surface-2);flex:none;
+  display:flex;align-items:center;justify-content:center;color:var(--navy-deep);
+}
+.msg-icon svg{width:21px;height:21px}
+.msg-body h4{margin:0 0 4px;font-size:1.02rem;font-weight:800;color:var(--navy-deep)}
+.msg-body p{margin:0 0 12px;font-size:.85rem;color:var(--ink-soft)}
+.msg-links{display:flex;gap:8px;flex-wrap:wrap}
+.msg-links a{
+  font-size:.76rem;font-weight:700;color:var(--navy-deep);background:var(--surface-2);
+  padding:6px 11px;border-radius:7px;
+}
+.msg-links a:hover{color:var(--teal)}
+.status-chip{
+  display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:700;color:var(--teal);margin-bottom:8px;
+}
+.status-chip .dot{width:6px;height:6px;border-radius:50%;background:var(--teal)}
 
-  .subcode{margin-top:14px;}
-  .subcode summary{cursor:pointer; font-size:12.5px; color:var(--muted); padding:6px 0;}
-  code.link{display:block; font-size:11.5px; direction:ltr; text-align:left; background:#0e1626;
-    border:1px solid var(--line); border-radius:8px; padding:8px 10px; margin-top:6px; color:#9fd8d0;
-    word-break:break-all; font-family:monospace;}
+/* tips / how-to section */
+.tip-layout{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.tip-card{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px;
+}
+.tip-card h4{margin:0 0 6px;font-size:1.08rem;font-weight:800;color:var(--navy-deep);display:flex;align-items:center;gap:10px}
+.tip-card h4 .num{
+  font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--teal);background:var(--teal-soft);
+  width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none;font-weight:700;
+}
+.tip-card ol{margin:14px 0 0;padding-right:20px;color:var(--ink-soft);font-size:.9rem;display:flex;flex-direction:column;gap:9px}
+.tip-card .note{
+  margin-top:16px;background:var(--amber-soft);border-radius:10px;padding:12px 14px;font-size:.82rem;color:#7a4f13;
+}
 
-  /* ---------- APN CARD ---------- */
-  .tut-card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); padding:24px 22px;}
-  .tut-card h3{margin:0 0 4px; font-size:16.5px; color:var(--amber);}
-  .tut-card .lead{color:var(--muted); font-size:13.5px; margin:0 0 14px;}
-  .tut-card .note{font-size:13px; color:var(--muted); border-top:1px dashed var(--line); padding-top:14px; margin-top:16px;}
-  .video-note{margin-top:14px; font-size:13px; color:var(--muted); display:flex; gap:8px; flex-wrap:wrap;}
-  .video-pill{background:#1b2743; border:1px solid var(--line); border-radius:8px; padding:7px 12px; font-size:12.5px;}
+/* subs / config links */
+.sub-panel{
+  background:var(--navy-deep);border-radius:20px;padding:36px;color:#fff;
+  display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;align-items:center;
+  position:relative;overflow:hidden;
+}
+.sub-panel::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(500px 260px at 90% 0%, rgba(21,143,130,.35), transparent 70%);
+}
+.sub-panel h3{position:relative;font-size:1.4rem;font-weight:850;margin:0 0 10px}
+.sub-panel p{position:relative;color:#c6d6e0;font-size:.92rem;margin:0 0 18px;max-width:380px}
+.sub-tags{position:relative;display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
+.sub-tags span{
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;background:rgba(255,255,255,.12);
+  padding:5px 10px;border-radius:7px;color:#dfe9ee;
+}
+.code-list{position:relative;display:flex;flex-direction:column;gap:9px}
+.code-row{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;padding:10px 12px;
+}
+.code-row .path{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:#d7e6ec;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:left;flex:1}
+.copy-btn{
+  flex:none;display:flex;align-items:center;gap:5px;font-size:.7rem;font-weight:700;
+  color:#0f3556;background:#fff;padding:6px 10px;border-radius:7px;
+}
+.copy-btn svg{width:12px;height:12px}
+.copy-btn.copied{background:var(--teal);color:#fff}
 
-  footer{margin-top:64px; text-align:center; color:var(--muted); font-size:13px;
-    border-top:1px solid var(--line); padding-top:24px;}
-  footer b{color:var(--text);}
+/* video modal */
+.modal-overlay{
+  position:fixed;inset:0;background:rgba(10,25,38,.72);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;z-index:200;padding:24px;
+}
+.modal-overlay.open{display:flex}
+.modal-box{
+  background:#0a1520;border-radius:18px;max-width:520px;width:100%;overflow:hidden;box-shadow:var(--shadow-lg);
+  position:relative;
+}
+.modal-box video{width:100%;display:block;max-height:78vh;background:#000}
+.modal-close{
+  position:absolute;top:12px;left:12px;z-index:5;
+  width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.14);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-close:hover{background:rgba(255,255,255,.26)}
+.modal-caption{padding:14px 18px;color:#cddce4;font-size:.85rem;background:#0a1520}
+
+/* footer */
+footer.site{border-top:1px solid var(--line);padding:34px 0 40px;margin-top:20px}
+.foot-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.foot-inner p{margin:0;color:var(--ink-faint);font-size:.82rem}
+.foot-brand{display:flex;align-items:center;gap:9px;color:var(--navy-deep);font-weight:800;font-size:.95rem}
+.foot-brand .mark{width:24px;height:24px;border-radius:7px;background:linear-gradient(155deg,var(--navy) 0%, var(--teal) 130%)}
+.to-top{
+  display:flex;align-items:center;gap:6px;font-size:.8rem;font-weight:700;color:var(--ink-soft);
+  border:1px solid var(--line);padding:8px 14px;border-radius:999px;
+}
+.to-top:hover{color:var(--teal);border-color:var(--teal)}
+
+/* responsive */
+@media (max-width:980px){
+  .hero-grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .msg-grid{grid-template-columns:repeat(2,1fr)}
+  .tip-layout{grid-template-columns:1fr}
+  .sub-panel{grid-template-columns:1fr}
+}
+@media (max-width:720px){
+  nav.links{display:none}
+  .menu-btn{display:flex}
+  .nav-cta{display:none}
+  .grid{grid-template-columns:1fr}
+  .msg-grid{grid-template-columns:1fr}
+  .hero{padding:50px 0 30px}
+  .wrap{padding:0 18px}
+  .hero-stats{gap:18px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none !important}
+}
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="route-bg"></div>
 
-  <div class="hero">
-    <div class="signal-row">
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-    </div>
-    <span class="eyebrow">کانال تلگرام عمومی</span>
-    <h1 class="title">لینک‌شیپ LinkShip</h1>
-    <p class="subtitle">اتصال خود را پایدار نگه دارید — مجموعه‌ای از فیلترشکن‌ها، پیام‌رسان‌های بدون فیلتر و آموزش‌های اتصال به اینترنت.</p>
-    <div class="stats">
-      <div class="stat"><b>۴۵</b>عکس</div>
-      <div class="stat"><b>۱۳</b>ویدیو</div>
-      <div class="stat"><b>۲۰</b>فایل</div>
-      <div class="stat"><b>۲۷</b>لینک</div>
-    </div>
-    <div class="free-tag">⭐ تمام محتوای کانال کاملاً رایگان است</div>
+<header class="site">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="mark"></span>
+      <span>مسیر آزاد<small>STAY&nbsp;CONNECTED</small></span>
+    </a>
+    <nav class="links">
+      <a href="#tools">فیلترشکن‌ها</a>
+      <a href="#messengers">پیام‌رسان‌ها</a>
+      <a href="#tips">آموزش و ترفند</a>
+      <a href="#subs">لینک‌های ساب</a>
+    </nav>
+    <a class="nav-cta" href="#tools">
+      شروع کنید
+      <svg viewBox="0 0 24 24" fill="none" width="14" height="14"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <button class="menu-btn" aria-label="منو" id="menuBtn"><span></span></button>
   </div>
+</header>
 
-  <div class="alert">
-    <b>🚨 نکته مهم قبل از شروع</b>
-    عملکرد هر فیلترشکن بسته به اپراتور و موقعیت مکانی شما متفاوت است. اگر یکی از فیلترها برایتان کار نکرد ناامید نشوید؛ گزینه‌ی دیگری را امتحان کنید تا بهترین نتیجه را بگیرید.
-  </div>
+<main id="top">
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> بایگانی کامل ابزارهای اتصال آزاد</span>
+        <h1 class="h-hero">اتصال خود را <em>پایدار</em><br>نگه دارید</h1>
+        <p class="lead">مجموعه‌ای دسته‌بندی‌شده از فیلترشکن‌ها، پیام‌رسان‌های بدون محدودیت و آموزش‌های تصویری برای دسترسی آزاد و روان به اینترنت؛ همه رایگان و همیشه به‌روز.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#tools">
+            مشاهده فیلترشکن‌ها
+            <svg viewBox="0 0 24 24" fill="none" width="16" height="16"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn-ghost" href="#tips">
+            آموزش‌های سریع
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div><b>12</b><span>ابزار اتصال آزاد</span></div>
+          <div><b>6</b><span>پیام‌رسان بدون فیلتر</span></div>
+          <div><b>100%</b><span>رایگان</span></div>
+        </div>
+      </div>
 
-  <!-- ================= FILTERS ================= -->
-  <section>
-    <div class="section-head">
-      <div class="dot"></div>
-      <h2>فیلترشکن‌های معرفی‌شده</h2>
-      <span>روی هرکدام بزنید تا جزئیات و لینک‌های دانلود باز شود</span>
+      <div class="route-panel">
+        <h3>مسیر رسیدن به اتصال پایدار</h3>
+        <p>سه گام ساده تا اینترنت بدون محدودیت</p>
+        <div class="route-svg-holder">
+          <svg viewBox="0 0 340 300" width="100%" xmlns="http://www.w3.org/2000/svg">
+            <path d="M40 40 C 40 120, 300 90, 300 150 C 300 210, 40 190, 40 260" fill="none" stroke="#dfe7eb" stroke-width="2" stroke-dasharray="1 9" stroke-linecap="round"/>
+            <path id="routeAnim" d="M40 40 C 40 120, 300 90, 300 150 C 300 210, 40 190, 40 260" fill="none" stroke="#158f82" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="14 500">
+              <animate attributeName="stroke-dashoffset" from="0" to="-700" dur="7s" repeatCount="indefinite"/>
+            </path>
+            <g>
+              <circle cx="40" cy="40" r="9" fill="#0f3556"/>
+              <circle cx="40" cy="40" r="15" fill="none" stroke="#0f3556" stroke-width="1.4" opacity=".25"/>
+              <text x="60" y="36" class="route-node-label">فیلترشکن‌ها</text>
+              <text x="60" y="50" class="route-node-sub">01 · VPN TOOLS</text>
+            </g>
+            <g>
+              <circle cx="300" cy="150" r="9" fill="#158f82"/>
+              <circle cx="300" cy="150" r="15" fill="none" stroke="#158f82" stroke-width="1.4" opacity=".25"/>
+              <text x="216" y="146" class="route-node-label">پیام‌رسان‌ها</text>
+              <text x="228" y="160" class="route-node-sub">02 · MESSENGERS</text>
+            </g>
+            <g>
+              <circle cx="40" cy="260" r="9" fill="#e8993a"/>
+              <circle cx="40" cy="260" r="15" fill="none" stroke="#e8993a" stroke-width="1.4" opacity=".25"/>
+              <text x="60" y="256" class="route-node-label">آموزش و ترفند</text>
+              <text x="60" y="270" class="route-node-sub">03 · GUIDES</text>
+            </g>
+          </svg>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">مهسا ان‌جی (MahsaNG)</span><span class="s-tag">اندروید</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>یک فیلترشکن بسیار قوی و قدرتمند که در حال حاضر فقط برای اندروید ارائه می‌شود.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.MahsaNet.MahsaNG" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://github.com/GFW-knocker/MahsaNG/releases" target="_blank" rel="noopener">صفحه گیت‌هاب (آخرین نسخه)</a>
+  <!-- ================= VPN TOOLS ================= -->
+  <section class="block" id="tools">
+    <div class="wrap">
+      <div class="route-divider"><span class="block-tag">01 · دسترسی آزاد</span><div class="ln"></div></div>
+      <div class="block-head">
+        <div>
+          <h2>فیلترشکن‌ها و ابزارهای اتصال آزاد</h2>
+          <p>دوازده ابزار امتحان‌شده برای عبور از محدودیت‌های اینترنتی — هرکدام با لینک دانلود رسمی، مشخصات پلتفرم و در صورت وجود، آموزش تصویری.</p>
         </div>
-        <p class="note">راهنما: بعد از کپی‌کردن لینک ساب، در v2rayNG یا مهسا ان‌جی وارد شوید → روی «+» بزنید → «Update Subscription» را انتخاب کنید → از منوی سه‌نقطه گزینه‌ی تست پینگ و سپس مرتب‌سازی بر اساس نتیجه‌ی تست را بزنید و سریع‌ترین کانفیگ را وصل کنید.</p>
-        <details class="subcode">
-          <summary>لینک‌های ساب مهسا (برای v2rayNG / MahsaNG / Hiddify / Streisand)</summary>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_1.txt</code>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt</code>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt</code>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt</code>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt</code>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt</code>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt</code>
-          <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt</code>
-        </details>
+        <span class="block-index">01</span>
       </div>
-    </details>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">استریسند (Streisand)</span><span class="s-tag">iOS / آیفون و آیپد</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>کلاینتی برای سیستم‌عامل iOS که با همان لینک‌های ساب مهسا کار می‌کند.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://apps.apple.com/us/app/streisand/id6450534064" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-        </div>
-        <ol class="steps">
-          <li>پس از نصب برنامه و کپی‌کردن لینک ساب، وارد برنامه شوید.</li>
-          <li>روی <b>سه‌نقطه</b> بالای صفحه بزنید و <b>Import from Clipboard</b> را انتخاب کنید.</li>
-          <li>گزینه‌ی <b>Update</b> را بزنید تا کانفیگ‌ها اضافه شوند.</li>
-          <li>روی <b>Latency</b> بزنید و پس از پایان تست، کانفیگ‌های غیرفعال را حذف کنید.</li>
-        </ol>
-      </div>
-    </details>
+      <div class="grid" id="toolsGrid">
+        <!-- Mahsa NG -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 12l1.8 1.8L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>مهسا ان‌جی <span class="en">MahsaNG</span></h3>
+          <p class="desc">فیلترشکن قدرتمند و پرسرعت، مخصوص اندروید، با پشتیبانی از ساب‌لینک‌های رایگان.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.MahsaNet.MahsaNG">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/GFW-knocker/MahsaNG/releases">صفحه گیت‌هاب</a>
+            </div>
+            <button class="tut-btn" data-video="https://cdn4.telesco.pe/file/49291c7e8d.mp4?token=qHhohB_BSZP3qGk_NAMqgpUn1wnBC2n_eYTUX3CdJKG6DK5pPPSO1zBrIX6lO6KpWf_nFk0uDCHgHzAByaM7nHoS6hx_sDBfghf658nCl5zcJ_TOGaXrx-iaTtjZwaGmyn26lnYc-xSs_EJcDmfemACnhP5dJDXMLfy4pJRZdk0JMYCe7mljM5oiIaoecKOcGuiEnRnPlJKT_R2evRwhgfTg-3jPlay6PCt7ZQPlMPaXjoMXlFWfba-03s9AqrXJrVMVfQtTlWPMm6z8si_YswO6bLn8Vgaf7WW5n3z4aFBhX-_thwec4lQRiNZ6Cja7Hr9DFYLdbBj8XRry4ddQrjzoLYYGMqknLXWitR9ENcuYlvuH2_duRcW1gSNrDutwJRiNb4oohoOr2QiJZhWoYyGpijaw_6z9cGAq5qraeb67jIHbQJRGf3qFSIx1nXYKlYBH2IGEFbmyeDQT784STQ5YPI-eEt4U2NpNTzs5qqOhyJVQlX8AwFaoOXyE8JMF1U5N6F2kgYRk9lSL-fG7i4rS94h3rQJ8XKuOf9GXGF6tJT-wZRWgCS1AQJnzDxJQ0sz9GR52DM9Ho7mOsVJxsH0JrprSkZ-jLGCuNWz4izHcr0djjMAgjRxHVogYUkwXcmv5R27x7EdgEMGthHOr_gJwSqXM3BRMKCcD7HrBjy0" data-caption="آموزش نصب و اتصال به مهسا ان‌جی">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+              پخش آموزش نصب
+            </button>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">هیدیفای (Hiddify)</span><span class="s-tag">اندروید، ویندوز، مک، لینوکس، iOS</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>«راهکار آزادی اینترنت» — یک فیلترشکن قوی و چندسکویی.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=app.hiddify.com&hl=en" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
-          <a class="btn" href="https://github.com/hiddify/hiddify-next/releases/download/v2.0.5/Hiddify-Android-universal.apk" target="_blank" rel="noopener">دانلود مستقیم APK اندروید (universal)</a>
-          <a class="btn" href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://github.com/hiddify/hiddify-next/releases/download/v2.0.5/Hiddify-Windows-Setup-x64.exe" target="_blank" rel="noopener">نصب‌کننده ویندوز (۶۴ بیتی)</a>
-          <a class="btn" href="https://github.com/hiddify/hiddify-next/releases" target="_blank" rel="noopener">صفحه گیت‌هاب (آخرین نسخه‌ها)</a>
-        </div>
-        <ol class="steps">
-          <li>بعد از کپی‌کردن لینک ساب، می‌توانید روی <b>Add from clipboard</b> بزنید، یا:</li>
-          <li>روی آیکون <b>+</b> بالای صفحه بزنید و <b>Manual Entry</b> را انتخاب کنید.</li>
-          <li>یک نام دلخواه بگذارید و لینک ساب را جای‌گذاری کنید.</li>
-          <li>بازه‌ی آپدیت خودکار را تعیین کنید (پیشنهاد: ۹۶ ساعت) و ذخیره کنید.</li>
-          <li>برنامه را استارت بزنید، وارد <b>Proxies</b> شوید و از منوی سه‌نقطه <b>By Delay</b> را انتخاب کنید تا کانفیگ‌ها بر اساس پینگ مرتب شوند.</li>
-          <li>روی دکمه‌ی صاعقه بزنید تا تست پینگ انجام شود و بهترین کانفیگ به‌صورت خودکار یا دستی انتخاب شود.</li>
-        </ol>
-      </div>
-    </details>
+        <!-- Streisand -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge teal">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>استریسند <span class="en">Streisand</span></h3>
+          <p class="desc">کلاینت اتصال آزاد ساده و سریع، مخصوص آیفون و آیپد، با وارد کردن مستقیم ساب‌لینک.</p>
+          <div class="platform-row"><span class="plat">iOS</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://apps.apple.com/us/app/streisand/id6450534064">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از اپ‌استور
+            </a>
+            <button class="tut-btn" data-video="https://cdn4.telesco.pe/file/952fda6286.mp4?token=XV1llN7hOKNIxfSX8BcW4J5iZS1nxJcruDSyrY2aiDDmMOHWIo0KrCTtPRzlhYhu0M_xsskdrcc7daCGaRDU7zQBOZ-Ll8c-ISh1l0bmB8ZMniG0bVNTtOmd2Gdcx2iF4fbwWJxn4aj0TfPwfyQRREaxis5IOqdAs15sSyjfP3rmqZ4-WP38XA00iCCRbedOxsT59ag_sukjRwr2xpHLPzBrfDi8lcZY5huXiCQQVK5fnOIaQLLlurgWIii5S-qoy84VCyCISB8Fmv1k2j7SFFlHLuHtNaaT7umBSVtTh3hDt2RX9XL-fLEJKpCaBI7IImdUw-8mk1BC0TD0Mk0mnA" data-caption="آموزش استفاده از استریسند مخصوص آیفون">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+              پخش آموزش نصب
+            </button>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">اوبلیوین (Oblivion)</span><span class="s-tag">اندروید و دسکتاپ</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>فیلترشکنی بر پایه‌ی Cloudflare WARP، در حال حاضر فقط برای اندروید و دسکتاپ موجود است.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=org.bepass.oblivion" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
-          <a class="btn" href="https://github.com/bepass-org/oblivion/releases/download/v7/oblivion-v7-signed.apk" target="_blank" rel="noopener">دانلود مستقیم APK اندروید</a>
-          <a class="btn" href="https://github.com/bepass-org/oblivion-desktop/releases/download/v2.61.0/oblivion-desktop-win-x64.exe" target="_blank" rel="noopener">نسخه دسکتاپ ویندوز (۶۴ بیتی)</a>
-          <a class="btn" href="https://github.com/bepass-org/oblivion/releases" target="_blank" rel="noopener">گیت‌هاب اندروید</a>
-          <a class="btn" href="https://github.com/bepass-org/oblivion-desktop/releases" target="_blank" rel="noopener">گیت‌هاب دسکتاپ</a>
-        </div>
-      </div>
-    </details>
+        <!-- Hiddify -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge amber">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.3 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.3-3.6-8.5S9.6 5.8 12 3.5z" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>هیدیفای <span class="en">Hiddify</span></h3>
+          <p class="desc">راهکار جامع آزادی اینترنت با پشتیبانی همه‌پلتفرمی و مدیریت آسان ساب‌لینک‌ها.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span><span class="plat">iOS</span><span class="plat">WINDOWS</span><span class="plat">macOS</span><span class="plat">LINUX</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=app.hiddify.com&hl=en">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://apps.apple.com/us/app/hiddify-proxy-vpn/id6596777532?platform=iphone">نسخه iOS</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/hiddify/hiddify-next/releases/download/v2.0.5/Hiddify-Windows-Setup-x64.exe">نسخه ویندوز</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/hiddify/hiddify-next/releases">صفحه گیت‌هاب</a>
+            </div>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">دریافت پروکسی تلگرام</span><span class="s-tag">بدون نیاز به فیلترشکن</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>روشی برای گرفتن پروکسی تلگرام بدون نیاز به نصب فیلترشکن.</p>
-        <ol class="steps">
-          <li>لینک زیر را در مرورگر باز کنید و متن نمایش‌داده‌شده را کپی کنید.</li>
-          <li>به تلگرام برگردید، متن را برای شخصی یا در «پیام‌های ذخیره‌شده» با نگه‌داشتن انگشت و انتخاب Paste ارسال کنید.</li>
-          <li>روی پروکسی‌های نمایش‌داده‌شده در پیام ضربه بزنید و متصل شوید.</li>
-        </ol>
-        <code class="link">https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/refs/heads/main/telegram/index.json</code>
-      </div>
-    </details>
+        <!-- Oblivion -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4 12a8 8 0 0016 0" stroke="currentColor" stroke-width="1.7" stroke-dasharray="1 3" stroke-linecap="round"/><circle cx="12" cy="12" r="2.4" fill="currentColor"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>اوبلیوین <span class="en">Oblivion</span></h3>
+          <p class="desc">فیلترشکن مبتنی بر Cloudflare WARP، سبک و پایدار، برای دسکتاپ و اندروید.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span><span class="plat">WINDOWS</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=org.bepass.oblivion">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/bepass-org/oblivion-desktop/releases/download/v2.61.0/oblivion-desktop-win-x64.exe">نسخه ویندوز</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/bepass-org/oblivion/releases">گیت‌هاب اندروید</a>
+            </div>
+            <button class="tut-btn" data-video="https://cdn4.telesco.pe/file/4a761c032f.mp4?token=JwBAkR-oUgMpepJct4URQ4RMFFdZF3TREIVkPQlVlHjrfgdzD7Fi9ZjhAI_xw714QYkJ3cWy8NewdyB-B9Ro3gZ5C-mMAeub4p7cnljPzCedlMMfVvYOyLB2G1i-0gedoYhkSGOhbawZ2AXTIGgJ4U0lK_gafud0NHN9s8UtKnAJP4lf0Ugd_VYQoHQF1e5qK-nZG38airtBOxCEZl7_PNWtwdW8SOOFVYqbJzSYebEEZootWImDD-uIKUWe-NKiSEnsN4PFweiwa0qugrfVgTyqTMzaIfmxdY8_uZMXYM7Z3BagREYiWwa7AZ2ZgYjZ1xkzRnttpugI_abkcHQ_7A" data-caption="آموزش استفاده از فیلترشکن Oblivion">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+              پخش آموزش نصب
+            </button>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">۱.۱.۱.۱ (Cloudflare)</span><span class="s-tag">اندروید، iOS، ویندوز و بیشتر</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>ابزار DNS/VPN رایگان کلادفلر بر پایه‌ی شبکه‌ی WARP؛ اتصال سریع و پایدار به هر جایی که بروید.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://1111-releases.cloudflareclient.com/win/latest" target="_blank" rel="noopener">نسخه ویندوز</a>
-          <a class="btn" href="https://apkpure.com/1-1-1-1-warp-safer-internet/com.cloudflare.onedotonedotonedotone" target="_blank" rel="noopener">APKPure (جایگزین)</a>
-          <a class="btn" href="https://1-1-1-1.en.uptodown.com/android" target="_blank" rel="noopener">Uptodown (جایگزین)</a>
-          <a class="btn" href="https://one.one.one.one" target="_blank" rel="noopener">وب‌سایت رسمی (لینوکس، مک و...)</a>
-        </div>
-        <p class="warn-note">اگر گوگل پلی پیام «این برنامه در کشور شما در دسترس نمی‌باشد» نشان داد، از مارکت‌های جایگزین بالا (APKPure یا Uptodown) استفاده کنید.</p>
-      </div>
-    </details>
+        <!-- Telegram proxy -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge teal">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M21 4L3 11.5l6 2.2M21 4l-3.4 16-6-6.5M21 4l-11.4 9.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>پروکسی تلگرام <span class="en">Telegram Proxy</span></h3>
+          <p class="desc">دریافت پراکسی برای اتصال مستقیم تلگرام، بدون نیاز به نصب فیلترشکن جداگانه.</p>
+          <div class="platform-row"><span class="plat">ALL PLATFORMS</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/refs/heads/main/telegram/index.json">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دریافت لینک پراکسی
+            </a>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">بگذر (Begzar VPN)</span><span class="s-tag">اندروید</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>فیلترشکنی ساده، امن و سریع؛ نسخه‌ای بر پایه‌ی کانفیگ‌های رایگان مهسا ان‌جی، کانال‌های تلگرامی و چند سرور اهدایی. دارای اتصال خودکار و سرورهای رایگان سریع.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://github.com/Begzar/BegzarApp/releases/download/v5.5.0/begzar-universal-5.5.0.apk" target="_blank" rel="noopener">دانلود مستقیم APK (نسخه ۵.۵.۰)</a>
-          <a class="btn" href="https://github.com/Begzar/BegzarApp/releases" target="_blank" rel="noopener">گیت‌هاب (آخرین نسخه)</a>
-          <a class="btn" href="https://begzar.xyz/" target="_blank" rel="noopener">وب‌سایت رسمی</a>
-        </div>
-      </div>
-    </details>
+        <!-- 1.1.1.1 -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge amber">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1116 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M4 12a8 8 0 0016 0" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="1.2" opacity=".5"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>وان‌وان‌وان‌وان <span class="en">1.1.1.1 (WARP)</span></h3>
+          <p class="desc">DNS و WARP سریع کلودفلر برای عبور روان از محدودیت‌های سایت‌های فیلترشده.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span><span class="plat">iOS</span><span class="plat">WINDOWS</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.cloudflare.onedotonedotonedotone">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://apps.apple.com/us/app/1-1-1-1-faster-internet/id1423538627?platform=iphone">نسخه iOS</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://apkpure.com/1-1-1-1-warp-safer-internet/com.cloudflare.onedotonedotonedotone">APKPure</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://one.one.one.one">وب‌سایت رسمی</a>
+            </div>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">Cloudflare One Agent</span><span class="s-tag">اندروید و iOS</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>ابزار ضد سانسور و ضد فیلترینگ از شرکت کلادفلر؛ دسترسی به محتوای مسدودشده بدون افت سرعت محسوس.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://apkpure.com/cloudflare-one-agent/com.cloudflare.cloudflareoneagent" target="_blank" rel="noopener">APKPure (جایگزین)</a>
-        </div>
-        <p class="warn-note">در صورت مسدودبودن گوگل پلی، از مارکت جایگزین بالا استفاده کنید.</p>
-      </div>
-    </details>
+        <!-- Begzar -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>بگذر <span class="en">Begzar VPN</span></h3>
+          <p class="desc">فیلترشکن ساده و سریع اندروید با اتصال خودکار به بهترین کانفیگ رایگان.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://github.com/Begzar/BegzarApp/releases/download/v5.5.0/begzar-universal-5.5.0.apk">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود مستقیم APK
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://begzar.xyz/">وب‌سایت رسمی</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/Begzar/BegzarApp/releases">صفحه گیت‌هاب</a>
+            </div>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">آرگو وی‌پی‌ان (ArgoVPN)</span><span class="s-tag">اندروید — نسخه ۲.۴</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>برنامه‌ی وی‌پی‌انی رایگان و بدون محدودیت حجمی برای اندروید.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://s3.amazonaws.com/argovpn/argovpn-universal.apk" target="_blank" rel="noopener">دانلود مستقیم APK</a>
-          <a class="btn" href="https://play.google.com/store/apps/details?id=com.filtershekanha.argovpn" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://s3.amazonaws.com/argovpn/argovpn-network/index.html" target="_blank" rel="noopener">راهنمای استفاده (وب)</a>
-        </div>
-        <p class="note">در اندروید ۱۳ به بعد، نمایش نوتیفیکیشن برنامه منوط به اجازه‌ی مستقیم کاربر است؛ در صورت ندادن این مجوز، برنامه نوتیفیکیشنی نشان نمی‌دهد.</p>
-      </div>
-    </details>
+        <!-- Cloudflare One Agent -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge teal">
+              <svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.7"/><path d="M8 12h8M12 8v8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>تک‌عامل کلودفلیر <span class="en">Cloudflare One Agent</span></h3>
+          <p class="desc">ابزار ضدسانسور کلودفلر برای دسترسی به محتوای فیلترشده بدون افت سرعت.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span><span class="plat">iOS</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.cloudflare.cloudflareoneagent">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://apps.apple.com/us/app/cloudflare-one-agent/id6443476492?platform=iphone">نسخه iOS</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://apkpure.com/cloudflare-one-agent/com.cloudflare.cloudflareoneagent">APKPure</a>
+            </div>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">اوستریچ (Ostrich VPN)</span><span class="s-tag">اندروید — نسخه ۲.۴.۱</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>پرسرعت، بدون قطعی، رایگان و مناسب تمام اپراتورها (از جمله همراه اول). دارای محیط کاربری ساده بدون نیاز به تنظیمات خاص و اتصال آنی. این برنامه توسط سازنده‌اش تبلیغات نمایش می‌دهد.</p>
-        <p class="note">پروتکل‌های موجود: Auto ⭐، IKEv2، Vmess ⭐، OpenVPN، WebSocket. برای اتصال بهتر از Auto یا Vmess استفاده کنید. سرورها و لوکیشن‌های متعددی به‌صورت رایگان در دسترس است.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.best.free.vpn.proxy" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://www.ostrichvpn.net/download/android/vpnkt-v2.4.1(283)-release.apk" target="_blank" rel="noopener">دانلود مستقیم APK</a>
-          <a class="btn" href="https://apps.apple.com/us/developer/geware-technology-limited/id1461689857" target="_blank" rel="noopener">صفحه‌ی سازنده در اپ‌استور (iOS)</a>
-          <a class="btn" href="https://www.ostrichvpn.net/" target="_blank" rel="noopener">وب‌سایت رسمی</a>
-        </div>
-      </div>
-    </details>
+        <!-- Argo VPN -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge amber">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>آرگو <span class="en">Argo VPN</span></h3>
+          <p class="desc">وی‌پی‌ان رایگان و بدون محدودیت حجمی برای اندروید، بدون نیاز به ثبت‌نام.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.filtershekanha.argovpn">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://s3.amazonaws.com/argovpn/argovpn-universal.apk">دانلود مستقیم APK</a>
+            </div>
+            <button class="tut-btn" data-video="none" data-caption="">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+              راهنمای متنی استفاده
+            </button>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">گف (Geph)</span><span class="s-tag">ویندوز، اندروید، لینوکس، مک، iOS</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>رایگان، دارای رمزگذاری ترافیک و سرورهای متعدد؛ متصل برای تمام اپراتورها. برای استفاده نیاز به ساخت حساب کاربری (نام کاربری و پسورد) دارید.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=io.geph.android" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
-          <a class="btn" href="https://dl.geph.io/geph-releases/android-stable/4.99.17/geph-android.apk" target="_blank" rel="noopener">دانلود مستقیم APK اندروید</a>
-          <a class="btn" href="https://apps.apple.com/us/app/geph/id1638148282?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://dl.geph.io/geph-releases/windows-stable/4.99.17/geph-windows-setup.exe" target="_blank" rel="noopener">نصب‌کننده ویندوز</a>
-          <a class="btn" href="http://geph.io/" target="_blank" rel="noopener">وب‌سایت رسمی</a>
-        </div>
-      </div>
-    </details>
+        <!-- Ostrich -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>اوستریچ <span class="en">Ostrich VPN</span></h3>
+          <p class="desc">اتصال آنی و پرسرعت با چند پروتکل قابل‌انتخاب (Vmess، IKEv2، OpenVPN).</p>
+          <div class="platform-row"><span class="plat">ANDROID</span><span class="plat">iOS</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.best.free.vpn.proxy">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://www.ostrichvpn.net/">وب‌سایت رسمی</a>
+            </div>
+            <button class="tut-btn" data-video="https://cdn4.telesco.pe/file/401d7d1fb4.mp4?token=ACwWnn_31FppyOwGZdzZJYn9-cZ6Pq-wCbokGJ0492TDxBfzWjYeGmgDuJAF5XAKPscGslExaUa77sWDYlAzWuXCuhb4-rR4wA6yc7prjc3CAHz8GH8YB5Pu7wiKtf7M5y1NVNh4rKOEmf9J_GDZuhNJd1q4TK9pAwXCm6V6SZBIr0E99fjwL6Ko2nqqDP1Yls_oM_vUvMR6O-wroaIs0_KP7wMBJLCyfEb91R5Hm66Yu2ShXciSsfuufZHWd8jnBp7Pe_FzxnO0kkKLfqyf9p2LflUiGA_57zfvu43Tw7ICSkJMAjY-6t4zgEO3m9hyn2FOL24HuGdW4BQpSgxHWQ" data-caption="آموزش استفاده از فیلترشکن Ostrich VPN">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+              پخش آموزش نصب
+            </button>
+          </div>
+        </article>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">امنزیا (AmneziaVPN)</span><span class="s-tag">اندروید، iOS، ویندوز</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <div class="btn-row">
-          <a class="btn primary" href="https://apps.apple.com/us/app/amneziavpn/id1600529900" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://play.google.com/store/apps/details?id=org.amnezia.vpn" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
-          <a class="btn" href="https://github.com/amnezia-vpn/amnezia-client/releases" target="_blank" rel="noopener">گیت‌هاب (همه نسخه‌ها)</a>
-          <a class="btn" href="https://github.com/amnezia-vpn/amnezia-client/releases/download/4.8.3.1/AmneziaVPN_4.8.3.1_x64.exe" target="_blank" rel="noopener">نصب‌کننده ویندوز</a>
-        </div>
-        <ol class="steps">
-          <li>ابتدا در کانال خبری amnezia_vpn_news_ir عضو شوید.</li>
-          <li>سپس یکی از ربات‌های دریافت کانفیگ رایگان را پیام دهید تا یک کانفیگ برایتان ارسال شود؛ برای مثال ربات <b>amnezia_free_iran_bot</b> (یا نسخه‌های مخصوص میانمار و قرقیزستان).</li>
-          <li>کانفیگ ارسالی را کپی کنید، برنامه را باز کنید، روی «+» بزنید، گزینه‌ی <b>Insert</b> را بزنید و سپس <b>Continue</b> را انتخاب کنید.</li>
-          <li>روی دایره‌ی وسط صفحه با متن <b>Connect</b> بزنید و منتظر بمانید تا فیلترشکن متصل شود.</li>
-        </ol>
+        <!-- Geph -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge teal">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 12h17M12 3.5c2.4 2.3 3.6 5.3 3.6 8.5s-1.2 6.2-3.6 8.5c-2.4-2.3-3.6-5.3-3.6-8.5S9.6 5.8 12 3.5z" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>گف <span class="en">Geph</span></h3>
+          <p class="desc">فیلترشکن رمزنگاری‌شده با سرورهای متعدد؛ نیاز به ساخت حساب کاربری رایگان دارد.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span><span class="plat">iOS</span><span class="plat">WINDOWS</span><span class="plat">LINUX</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=io.geph.android">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://apps.apple.com/us/app/geph/id1638148282?platform=iphone">نسخه iOS</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://dl.geph.io/geph-releases/windows-stable/4.99.17/geph-windows-setup.exe">نسخه ویندوز</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://geph.io">وب‌سایت رسمی</a>
+            </div>
+            <button class="tut-btn" data-video="none" data-caption="">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+              راهنمای ساخت حساب
+            </button>
+          </div>
+        </article>
+
+        <!-- Amnezia -->
+        <article class="card">
+          <div class="card-top">
+            <div class="icon-badge amber">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 12l1.8 1.8L15 10" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span class="free-pill">FREE</span>
+          </div>
+          <h3>امنزیا <span class="en">AmneziaVPN</span></h3>
+          <p class="desc">فیلترشکن متن‌باز با دریافت کانفیگ از طریق بات تلگرام و پروتکل‌های ضدشناسایی.</p>
+          <div class="platform-row"><span class="plat">ANDROID</span><span class="plat">iOS</span><span class="plat">WINDOWS</span></div>
+          <div class="link-row">
+            <a class="dl" target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=org.amnezia.vpn">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v13m0 0l-5-5m5 5l5-5M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              دانلود از گوگل‌پلی
+            </a>
+            <div class="more">
+              <a class="dl sec" target="_blank" rel="noopener" href="https://apps.apple.com/us/app/amneziavpn/id1600529900">نسخه iOS</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/amnezia-vpn/amnezia-client/releases/download/4.8.3.1/AmneziaVPN_4.8.3.1_x64.exe">نسخه ویندوز</a>
+              <a class="dl sec" target="_blank" rel="noopener" href="https://github.com/amnezia-vpn/amnezia-client/releases">صفحه گیت‌هاب</a>
+            </div>
+            <button class="tut-btn" data-video="none" data-caption="">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M10 9l5 3-5 3V9z" fill="currentColor"/></svg>
+              راهنمای دریافت کانفیگ
+            </button>
+          </div>
+        </article>
       </div>
-    </details>
+    </div>
   </section>
 
   <!-- ================= MESSENGERS ================= -->
-  <section>
-    <div class="section-head">
-      <div class="dot"></div>
-      <h2>پیام‌رسان‌های بدون فیلتر</h2>
-      <span>گزینه‌های جایگزین برای ارتباط تیمی و شخصی در ایران</span>
-    </div>
-
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">گوگل چت (Google Chat)</span><span class="s-tag">فیلتر نیست</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>در حال حاضر در ایران فیلتر نیست و ارتباط پایداری فراهم می‌کند. فقط کافی است یک حساب گوگل (جیمیل) داشته باشید. این برنامه پیش‌تر با نام «هنگوتس» شناخته می‌شد.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.google.android.apps.dynamite&hl=en" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://myket.ir/app/com.google.android.apps.dynamite" target="_blank" rel="noopener">مایکت</a>
-          <a class="btn" href="https://cafebazaar.ir/app/com.google.android.apps.dynamite" target="_blank" rel="noopener">کافه‌بازار</a>
-          <a class="btn" href="https://apps.apple.com/us/app/google-chat/id1163852619?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://mail.google.com/chat" target="_blank" rel="noopener">نسخه‌ی وب</a>
+  <section class="block" id="messengers" style="background:var(--surface-2)">
+    <div class="wrap">
+      <div class="route-divider"><span class="block-tag">02 · ارتباط بدون مرز</span><div class="ln"></div></div>
+      <div class="block-head">
+        <div>
+          <h2>پیام‌رسان‌های بدون فیلتر</h2>
+          <p>این اپلیکیشن‌ها بدون نیاز به فیلترشکن (یا با فیلترینگ بسیار محدود) در دسترس‌اند و برای تماس و چت روزمره مناسب‌اند.</p>
         </div>
+        <span class="block-index">02</span>
       </div>
-    </details>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">گوگل میت (Google Meet)</span><span class="s-tag">فیلتر نیست</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>مانند گوگل چت، در حال حاضر فیلتر نیست. اگر نسخه‌ی پیش‌فرض روی گوشی شما نصب است، احتمالاً قدیمی است — برای عملکرد بهتر آن را به آخرین نسخه به‌روزرسانی کنید.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.google.android.apps.tachyon&hl=en" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://myket.ir/app/com.google.android.apps.tachyon" target="_blank" rel="noopener">مایکت</a>
-          <a class="btn" href="https://cafebazaar.ir/app/com.google.android.apps.tachyon" target="_blank" rel="noopener">کافه‌بازار</a>
-          <a class="btn" href="https://apps.apple.com/us/app/google-meet/id1096918571?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://meet.google.com/calling" target="_blank" rel="noopener">نسخه‌ی وب</a>
+      <div class="msg-grid">
+        <div class="msg-card">
+          <div class="msg-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 11.5a8.5 8.5 0 11-3.6-6.96M21 5l-9 8-4-3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="msg-body">
+            <span class="status-chip"><span class="dot"></span> در حال حاضر فیلتر نیست</span>
+            <h4>گوگل چت <span class="mono" style="font-size:.7rem;color:var(--ink-faint)"> Google Chat</span></h4>
+            <p>چت و تماس با کیفیت بالا؛ فقط با یک حساب گوگل/جیمیل. نام قبلی: Hangouts.</p>
+            <div class="msg-links">
+              <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.google.android.apps.dynamite&hl=en">اندروید</a>
+              <a target="_blank" rel="noopener" href="https://apps.apple.com/us/app/google-chat/id1163852619?platform=iphone">iOS</a>
+              <a target="_blank" rel="noopener" href="https://mail.google.com/chat">نسخه وب</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </details>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">المنت (Element)</span><span class="s-tag">پیام‌رسان امن</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>پیام‌رسانی امن شبیه تلگرام، با این تفاوت که ورود از طریق ایمیل انجام می‌شود (نیازی به شماره تلفن نیست). فیلترکردن آن بسیار دشوار است، چون سرورهای جایگزین متعددی دارد که فیلترینگ را دور می‌زند — در حال حاضر هرچند فیلتر شده، همچنان به‌خوبی کار می‌کند.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=im.vector.app" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://apps.apple.com/us/app/element-messenger/id1083446067" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://packages.riot.im/desktop/install/win32/x64/Element%20Setup.exe" target="_blank" rel="noopener">نسخه دسکتاپ ویندوز (۶۴ بیتی)</a>
+        <div class="msg-card">
+          <div class="msg-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M15 8.5v7l5 3v-13l-5 3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><rect x="3" y="6" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="msg-body">
+            <span class="status-chip"><span class="dot"></span> در حال حاضر فیلتر نیست</span>
+            <h4>گوگل میت <span class="mono" style="font-size:.7rem;color:var(--ink-faint)"> Google Meet</span></h4>
+            <p>تماس تصویری باکیفیت با حساب گوگل؛ برای بهترین عملکرد همیشه به‌روز نگه دارید.</p>
+            <div class="msg-links">
+              <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.google.android.apps.tachyon&hl=en">اندروید</a>
+              <a target="_blank" rel="noopener" href="https://apps.apple.com/us/app/google-meet/id1096918571?platform=iphone">iOS</a>
+              <a target="_blank" rel="noopener" href="https://meet.google.com/calling">نسخه وب</a>
+            </div>
+          </div>
         </div>
-        <p class="warn-note">ممکن است لینک‌های دانلود برایتان فیلتر باشد؛ قبل از دانلود فیلترشکن خود را روشن کنید.</p>
-      </div>
-    </details>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">واتس‌اپ (WhatsApp)</span><span class="s-tag">متعلق به متا</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>پیام‌رسان شناخته‌شده در سراسر دنیا با میلیون‌ها کاربر فعال، متعلق به شرکت متا (فیسبوک سابق)؛ برای اندروید، iOS، ویندوز و مک در دسترس است.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.whatsapp" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://myket.ir/app/com.whatsapp" target="_blank" rel="noopener">مایکت</a>
-          <a class="btn" href="https://cafebazaar.ir/app/com.whatsapp" target="_blank" rel="noopener">کافه‌بازار</a>
-          <a class="btn" href="https://apps.microsoft.com/detail/9nksqgp7f2nh?hl=en-us&gl=US" target="_blank" rel="noopener">مایکروسافت استور (ویندوز)</a>
-          <a class="btn" href="https://www.whatsapp.com/download" target="_blank" rel="noopener">نسخه دسکتاپ (ویندوز و مک)</a>
+        <div class="msg-card">
+          <div class="msg-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 12c0 4.5-4 8-9 8-1.1 0-2.2-.16-3.2-.46L3 21l1.5-4.2A8.4 8.4 0 013 12c0-4.5 4-8 9-8s9 3.5 9 8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <div class="msg-body">
+            <span class="status-chip" style="color:var(--amber)"><span class="dot" style="background:var(--amber)"></span> عبور از فیلتر با سرورهای متعدد</span>
+            <h4>المنت <span class="mono" style="font-size:.7rem;color:var(--ink-faint)"> Element</span></h4>
+            <p>پیام‌رسانی امن مشابه تلگرام؛ ورود با ایمیل و بدون نیاز به شماره تلفن.</p>
+            <div class="msg-links">
+              <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=im.vector.app">اندروید</a>
+              <a target="_blank" rel="noopener" href="https://apps.apple.com/us/app/element-messenger/id1083446067">iOS</a>
+              <a target="_blank" rel="noopener" href="https://packages.riot.im/desktop/install/win32/x64/Element%20Setup.exe">ویندوز</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </details>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">تلگرام (پیام‌رسان اصلی)</span><span class="s-tag">اندروید، iOS، دسکتاپ</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>پیام‌رسانی سریع، ساده و ایمن با امکاناتی مثل تماس صوتی و تصویری، ساخت کانال و گروه، ارسال فایل‌های حجیم و رمزگذاری اطلاعات.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=org.telegram.messenger" target="_blank" rel="noopener">گوگل پلی (اندروید)</a>
-          <a class="btn" href="https://apps.apple.com/us/app/telegram-messenger/id686449807" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://desktop.telegram.org/" target="_blank" rel="noopener">نسخه دسکتاپ (ویندوز، لینوکس، مک)</a>
+        <div class="msg-card">
+          <div class="msg-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 10-14.9 4L4 20l4.2-1a8 8 0 1011.8-7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+          <div class="msg-body">
+            <span class="status-chip"><span class="dot"></span> بخشی از زندگی روزمره میلیون‌ها کاربر</span>
+            <h4>واتساپ <span class="mono" style="font-size:.7rem;color:var(--ink-faint)"> WhatsApp</span></h4>
+            <p>پیام‌رسان شناخته‌شده متعلق به متا؛ برای اندروید، iOS، ویندوز و مک در دسترس است.</p>
+            <div class="msg-links">
+              <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.whatsapp">اندروید</a>
+              <a target="_blank" rel="noopener" href="https://www.whatsapp.com/download">دسکتاپ</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </details>
 
-    <details class="tool">
-      <summary><div class="s-left"><span class="s-name">مایکروسافت تیمز (Microsoft Teams)</span><span class="s-tag">ابزار تیمی</span></div><span class="chevron">▾</span></summary>
-      <div class="tool-body">
-        <p>ابزاری برای ساماندهی فعالیت‌های تیمی، ارتباط مؤثر میان اعضا و اشتراک‌گذاری فایل؛ دارای رابط کاربری ساده، پشتیبانی از تماس صوتی/تصویری و چت گروهی.</p>
-        <div class="btn-row">
-          <a class="btn primary" href="https://play.google.com/store/apps/details?id=com.microsoft.teams&hl=en" target="_blank" rel="noopener">گوگل پلی</a>
-          <a class="btn" href="https://myket.ir/app/com.microsoft.teams" target="_blank" rel="noopener">مایکت</a>
-          <a class="btn" href="https://cafebazaar.ir/app/com.microsoft.teams" target="_blank" rel="noopener">کافه‌بازار</a>
-          <a class="btn" href="https://apps.apple.com/us/app/microsoft-teams/id1113153706?platform=iphone" target="_blank" rel="noopener">اپ‌استور (iOS)</a>
-          <a class="btn" href="https://www.microsoft.com/en-us/microsoft-teams/download-app" target="_blank" rel="noopener">نسخه دسکتاپ (ویندوز)</a>
-          <a class="btn" href="https://www.microsoft.com/en-us/microsoft-teams/log-in" target="_blank" rel="noopener">نسخه تحت وب</a>
+        <div class="msg-card">
+          <div class="msg-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M21 4L3 11.5l6 2.2M21 4l-3.4 16-6-6.5M21 4l-11.4 9.7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="msg-body">
+            <span class="status-chip"><span class="dot"></span> پیام‌رسان اصلی این آرشیو</span>
+            <h4>تلگرام <span class="mono" style="font-size:.7rem;color:var(--ink-faint)"> Telegram</span></h4>
+            <p>پیام‌رسان سریع، ساده و امن؛ با تماس صوتی/تصویری، کانال و گروه نامحدود.</p>
+            <div class="msg-links">
+              <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=org.telegram.messenger">اندروید</a>
+              <a target="_blank" rel="noopener" href="https://apps.apple.com/us/app/telegram-messenger/id686449807">iOS</a>
+              <a target="_blank" rel="noopener" href="https://desktop.telegram.org/">دسکتاپ</a>
+            </div>
+          </div>
         </div>
-      </div>
-    </details>
-  </section>
 
-  <!-- ================= APN TUTORIAL ================= -->
-  <section>
-    <div class="section-head">
-      <div class="dot"></div>
-      <h2>آموزش‌ها</h2>
-      <span>تنظیمات و راهنمای رفع مشکل اتصال</span>
-    </div>
-    <div class="tut-card">
-      <h3>تنظیم صحیح APN در تلفن همراه</h3>
-      <p class="lead">مخصوص کسانی که اینترنت‌شان ضعیف است یا نمی‌توانند به کانفیگ‌ها وصل شوند.</p>
-      <ol class="steps">
-        <li>وارد <b>تنظیمات</b> شوید و گزینه‌ی شبکه‌های تلفن‌همراه را باز کنید.</li>
-        <li>به بخش <b>سیم‌کارت‌ها</b> بروید و سیم‌کارت فعال برای اینترنت را انتخاب کنید.</li>
-        <li>روی <b>نام‌های نقطه دسترسی (APN)</b> بزنید.</li>
-        <li>گزینه‌ی <b>افزودن / +</b> را انتخاب کنید تا یک APN جدید بسازید.</li>
-        <li>فقط دو فیلد <b>Name</b> و <b>APN</b> را پر کنید (مثلاً هر دو را «bahram» بگذارید) و فیلدهای پروکسی و پورت را خالی رها کنید — در هر اپراتوری که هستید نام دلخواه مهم نیست.</li>
-        <li>روی <b>More</b> و سپس <b>Save</b> بزنید، APN تازه‌ساخته را انتخاب و به اینترنت وصل شوید.</li>
-      </ol>
-      <div class="note">نکته: فیلد Proxy در همه‌ی اپراتورها باید خالی بماند. نکته‌ی دیگر: گوشی را از حالت رومینگ خارج کنید.</div>
-      <div class="video-note">
-        <span class="video-pill">🎬 آموزش تصویری افزایش سرعت اینترنت — شماره ۱</span>
-        <span class="video-pill">🎬 آموزش تصویری افزایش سرعت اینترنت — شماره ۲</span>
+        <div class="msg-card">
+          <div class="msg-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><path d="M3 9h18M8 4v5" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="msg-body">
+            <span class="status-chip"><span class="dot"></span> در حال حاضر فیلتر نیست</span>
+            <h4>مایکروسافت تیمز <span class="mono" style="font-size:.7rem;color:var(--ink-faint)"> MS Teams</span></h4>
+            <p>ابزار سازمان‌دهی فعالیت تیمی با چت گروهی، تماس و اشتراک‌گذاری فایل.</p>
+            <div class="msg-links">
+              <a target="_blank" rel="noopener" href="https://play.google.com/store/apps/details?id=com.microsoft.teams&hl=en">اندروید</a>
+              <a target="_blank" rel="noopener" href="https://apps.apple.com/us/app/microsoft-teams/id1113153706?platform=iphone">iOS</a>
+              <a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/microsoft-teams/download-app">دسکتاپ</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <footer>
-    برگرفته از محتوای عمومی کانال <b>LinkShip لینک‌شیپ</b> — همه‌ی خدمات این کانال رایگان است.<br>
-    عملکرد هر فیلترشکن به اپراتور و شرایط شبکه‌ی شما بستگی دارد؛ اگر گزینه‌ای کار نکرد، گزینه‌ی دیگری را امتحان کنید.
-  </footer>
+  <!-- ================= TIPS ================= -->
+  <section class="block" id="tips">
+    <div class="wrap">
+      <div class="route-divider"><span class="block-tag">03 · رفع مشکل اتصال</span><div class="ln"></div></div>
+      <div class="block-head">
+        <div>
+          <h2>آموزش‌ها و ترفندهای اتصال</h2>
+          <p>راهنمای گام‌به‌گام برای زمانی که اینترنت ضعیف است یا فیلترشکن به کانفیگ‌ها وصل نمی‌شود.</p>
+        </div>
+        <span class="block-index">03</span>
+      </div>
 
+      <div class="tip-layout">
+        <div class="tip-card">
+          <h4><span class="num">۱</span> تنظیم صحیح APN در تلفن همراه</h4>
+          <p style="color:var(--ink-faint);font-size:.85rem;margin:6px 0 0">برای زمانی که اینترنت ضعیف است یا فیلترشکن به کانفیگ‌ها وصل نمی‌شود.</p>
+          <ol>
+            <li>وارد تنظیمات شوید و روی «شبکه‌های تلفن‌همراه» بزنید.</li>
+            <li>وارد بخش «سیم‌کارت‌ها» شوید.</li>
+            <li>سیم‌کارتی که اینترنت آن فعال است را انتخاب کنید.</li>
+            <li>روی گزینه «نام‌های نقاط دستیابی» (APN) بزنید.</li>
+            <li>روی «+» یا «افزودن» بزنید.</li>
+            <li>فقط دو فیلد Name و APN را پر کنید — مثلاً هر دو را <span class="mono">bahram</span> بگذارید — و فیلد Proxy و Port را خالی بگذارید.</li>
+            <li>روی More سپس Save بزنید تا ذخیره شود، سپس APN جدید را انتخاب کرده و به اینترنت وصل شوید.</li>
+          </ol>
+          <div class="note">نکته: در همه اپراتورها فیلد Proxy باید خالی بماند و گوشی باید از حالت رومینگ خارج باشد.</div>
+        </div>
+
+        <div class="tip-card">
+          <h4><span class="num">۲</span> وقتی یک فیلترشکن کار نمی‌کند</h4>
+          <p style="color:var(--ink-faint);font-size:.85rem;margin:6px 0 0">عملکرد هر ابزار به اپراتور و موقعیت جغرافیایی شما بستگی دارد.</p>
+          <ol>
+            <li>اگر یک فیلترشکن برای شما کار نکرد، ناامید نشوید — این طبیعی است.</li>
+            <li>از دیگر ابزارهای همین صفحه استفاده کنید و چند گزینه را امتحان کنید.</li>
+            <li>در کلاینت‌هایی مثل Hiddify یا v2rayNG، از گزینه «تست تأخیر» (Latency/Real Delay) برای مرتب‌سازی کانفیگ‌ها بر اساس بهترین پینگ استفاده کنید.</li>
+            <li>کانفیگ‌های غیرفعال یا با پینگ بالا را حذف کنید و روی بهترین گزینه متصل شوید.</li>
+          </ol>
+          <div class="note">نکته: در گوشی‌های اندروید ۱۳ به بالا، حتماً اجازهٔ نمایش نوتیفیکیشن را به فیلترشکن بدهید تا وضعیت اتصال را ببینید.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SUB LINKS ================= -->
+  <section class="block" id="subs" style="padding-top:0">
+    <div class="wrap">
+      <div class="sub-panel">
+        <div>
+          <h3>ساب‌لینک رایگان — نسخهٔ فعلی</h3>
+          <p>جدیدترین لینک ساب یکپارچه؛ فقط کپی کنید و در V2rayNG، مهسا ان‌جی، Hiddify یا Streisand وارد کنید.</p>
+          <div class="sub-tags"><span>ACTIVE NOW</span><span>ALL OPERATORS</span><span>FREE</span></div>
+        </div>
+        <div class="code-list">
+          <div class="code-row" style="background:rgba(21,143,130,.18);border-color:rgba(21,143,130,.4)">
+            <span class="path">https://girl.liwagap310.workers.dev/sub</span>
+            <button class="copy-btn" data-copy="https://girl.liwagap310.workers.dev/sub"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button>
+          </div>
+        </div>
+      </div>
+
+      <details style="margin-top:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 22px">
+        <summary style="cursor:pointer;font-weight:700;color:var(--navy-deep);font-size:.92rem">لینک‌های ساب تفکیک‌شده بر اساس اپراتور (جایگزین)</summary>
+        <div class="code-list" style="margin-top:14px">
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mci/sub_1.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_1.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mci/sub_2.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_2.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mci/sub_3.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_3.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mci/sub_4.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mci/sub_4.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mtn/sub_1.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_1.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mtn/sub_2.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_2.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mtn/sub_3.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_3.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+          <div class="code-row" style="background:var(--surface-2);border-color:var(--line)"><span class="path" style="color:var(--ink-soft)">…/mtn/sub_4.txt</span><button class="copy-btn" data-copy="https://raw.githubusercontent.com/mahsanet/MahsaFreeConfig/main/mtn/sub_4.txt"><svg viewBox="0 0 24 24" fill="none"><rect x="9" y="9" width="11" height="11" rx="2" stroke="currentColor" stroke-width="1.8"/><path d="M5 15V6a2 2 0 012-2h9" stroke="currentColor" stroke-width="1.8"/></svg>کپی</button></div>
+        </div>
+      </details>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap foot-inner">
+    <div class="foot-brand"><span class="mark"></span> مسیر آزاد</div>
+    <p>همهٔ ابزارها رایگان‌اند — این صفحه صرفاً یک بایگانی مرجع برای دسترسی سریع است.</p>
+    <a class="to-top" href="#top">بازگشت به بالا ↑</a>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </button>
+    <video id="modalVideo" controls playsinline></video>
+    <div class="modal-caption" id="modalCaption"></div>
+  </div>
 </div>
+
+<script>
+// mobile menu toggle (simple show/hide of nav links)
+document.getElementById('menuBtn').addEventListener('click', function(){
+  var nav = document.querySelector('nav.links');
+  var open = nav.style.display === 'flex';
+  nav.style.display = open ? 'none' : 'flex';
+  nav.style.flexDirection = 'column';
+  nav.style.position='absolute';
+  nav.style.top='72px';
+  nav.style.right='0';
+  nav.style.left='0';
+  nav.style.background='#fff';
+  nav.style.padding='18px 28px';
+  nav.style.borderBottom='1px solid var(--line)';
+});
+
+// video modal
+var overlay = document.getElementById('modalOverlay');
+var videoEl = document.getElementById('modalVideo');
+var captionEl = document.getElementById('modalCaption');
+
+document.querySelectorAll('.tut-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var src = btn.getAttribute('data-video');
+    var cap = btn.getAttribute('data-caption') || '';
+    if(!src || src === 'none'){
+      alert('برای این ابزار در حال حاضر ویدیوی مستقیم موجود نیست. راهنمای متنی موجود در همین کارت را دنبال کنید.');
+      return;
+    }
+    videoEl.src = src;
+    captionEl.textContent = cap;
+    overlay.classList.add('open');
+    videoEl.play().catch(function(){});
+  });
+});
+function closeModal(){
+  overlay.classList.remove('open');
+  videoEl.pause();
+  videoEl.removeAttribute('src');
+  videoEl.load();
+}
+document.getElementById('modalClose').addEventListener('click', closeModal);
+overlay.addEventListener('click', function(e){ if(e.target === overlay) closeModal(); });
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeModal(); });
+
+// copy sub links
+document.querySelectorAll('.copy-btn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var text = btn.getAttribute('data-copy');
+    navigator.clipboard.writeText(text).then(function(){
+      btn.classList.add('copied');
+      var original = btn.innerHTML;
+      btn.innerHTML = 'کپی شد ✓';
+      setTimeout(function(){ btn.innerHTML = original; btn.classList.remove('copied'); }, 1800);
+    });
+  });
+});
+</script>
 </body>
 </html>
