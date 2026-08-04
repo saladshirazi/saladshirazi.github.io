@@ -1,48 +1,45 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>کپی کردن</title>
-  <style>
+<meta charset="UTF-8">
+<title>Copy Page</title>
+<style>
     body {
-      font-family: sans-serif;
-      text-align: center;
-      direction: rtl;
-      background: #fafafa;
-      margin: 0;
-      padding: 0;
+        font-family: sans-serif;
+        direction: rtl;
+        padding: 30px;
+        background: #f5f5f5;
     }
     .copy-btn {
-      margin: 25px auto;
-      padding: 22px 45px;
-      font-size: 26px;
-      border: none;
-      border-radius: 14px;
-      background: #0084ff;
-      color: #fff;
-      cursor: pointer;
+        background: #007bff;
+        color: white;
+        padding: 18px 30px;
+        font-size: 22px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin: 20px 0;
+        width: 100%;
     }
     .copy-btn:hover {
-      background: #0066c9;
+        background: #0056b3;
     }
-    .space {
-      height: 500px;
+    #text {
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        font-size: 20px;
+        line-height: 1.8;
+        margin: 30px 0;
     }
-  </style>
+</style>
 </head>
 <body>
 
-  <!-- دکمه بزرگ در ابتدای سایت -->
-  <button class="copy-btn" onclick="copyText()">کپی کردن</button>
+<button class="copy-btn" onclick="copyText()">📋 کپی متن</button>
 
-  <div class="space"></div>
-
-  <!-- دکمه بزرگ در انتهای سایت -->
-  <button class="copy-btn" onclick="copyText()">کپی کردن</button>
-
-  <script>
-    function copyText() {
-      const text = "[
+<div id="text">
+  [
     {
         "remarks": "💦 1 - VLESS - Domain : 80",
         "version": {
@@ -34963,12 +34960,19 @@
         },
         "stats": {}
     }
-]";
-      navigator.clipboard.writeText(text).then(() => {
-        alert("کپی شد");
-      });
-    }
-  </script>
+]
+</div>
+
+<button class="copy-btn" onclick="copyText()">📋 کپی متن</button>
+
+<script>
+function copyText() {
+    const text = document.getElementById("text").innerText;
+    navigator.clipboard.writeText(text).then(() => {
+        alert("متن با موفقیت کپی شد!");
+    });
+}
+</script>
 
 </body>
 </html>
