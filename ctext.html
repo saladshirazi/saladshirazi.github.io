@@ -2,76 +2,50 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>دکمه کپی زندگی</title>
+  <title>کپی کردن</title>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
       direction: rtl;
-      background: #f5f5f5;
+      background: #fafafa;
       margin: 0;
       padding: 0;
     }
-    .big-btn {
-      margin: 20px auto;
-      padding: 20px 40px;
-      font-size: 24px;
+    .copy-btn {
+      margin: 25px auto;
+      padding: 22px 45px;
+      font-size: 26px;
       border: none;
-      border-radius: 12px;
-      background: #007bff;
+      border-radius: 14px;
+      background: #0084ff;
       color: #fff;
       cursor: pointer;
     }
-    .big-btn:hover {
-      background: #0056b3;
+    .copy-btn:hover {
+      background: #0066c9;
     }
-    .content {
-      margin: 40px auto;
-      max-width: 600px;
-      font-size: 18px;
-      line-height: 1.8;
-    }
-    .footer {
-      margin: 40px 0 20px;
+    .space {
+      height: 500px;
     }
   </style>
 </head>
 <body>
 
   <!-- دکمه بزرگ در ابتدای سایت -->
-  <button class="big-btn" onclick="copyLife()">کپی کردن عبارت «زندگی»</button>
+  <button class="copy-btn" onclick="copyText()">کپی کردن</button>
 
-  <div class="content">
-    <p>
-      این یک صفحه نمونه است که در آن می‌توانید با فشردن دکمه بالا یا پایین،
-      عبارت «زندگی» را در کلیپ‌بورد خود کپی کنید.
-    </p>
-  </div>
+  <div class="space"></div>
 
-  <!-- دکمه در انتهای سایت -->
-  <div class="footer">
-    <button class="big-btn" onclick="copyLife()">کپی دوباره عبارت «زندگی»</button>
-  </div>
+  <!-- دکمه بزرگ در انتهای سایت -->
+  <button class="copy-btn" onclick="copyText()">کپی کردن</button>
 
   <script>
-    function copyLife() {
+    function copyText() {
       const text = "زندگی";
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function() {
-          alert("عبارت «زندگی» کپی شد ✅");
-        }, function() {
-          alert("کپی انجام نشد ❌");
-        });
-      } else {
-        // روش قدیمی برای مرورگرهای خیلی قدیمی
-        const tempInput = document.createElement("input");
-        tempInput.value = text;
-        document.body.appendChild(tempInput);
-        tempInput.select();
-        document.execCommand("copy");
-        document.body.removeChild(tempInput);
-        alert("عبارت «زندگی» کپی شد ✅");
-      }
+      navigator.clipboard.writeText(text).then(() => {
+        alert("کپی شد");
+      });
     }
   </script>
 
