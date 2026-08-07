@@ -174,7 +174,9 @@
     display:flex; align-items:center; justify-content:center;
     color:#fff; font-weight:800; font-size:19px; letter-spacing:-.02em;
     box-shadow:0 8px 18px -6px rgba(15,27,45,.35);
+    overflow:hidden; background:var(--surface);
   }
+  .app-badge img{ width:100%; height:100%; object-fit:cover; display:block }
   .app-title-wrap h3{
     font-size:21px; font-weight:800; display:flex; align-items:baseline; gap:9px; flex-wrap:wrap;
   }
@@ -263,6 +265,12 @@
     background:var(--warn-bg); border:1px solid var(--warn-border); border-radius:12px; padding:14px 16px;
   }
   .tip-box div{ display:flex; align-items:center; gap:8px; font-size:13.8px; color:#7A3B0C; font-weight:600 }
+
+  /* emoji steps */
+  .emoji-steps{ list-style:none; display:flex; flex-direction:column; gap:12px }
+  .emoji-steps li{ display:flex; align-items:flex-start; gap:10px; font-size:14.8px; color:#2B3648 }
+  .emoji-steps li .emj{ flex:0 0 auto; font-size:17px; line-height:1.5 }
+  .emoji-steps li b{ color:var(--ink) }
 
   /* ============ FOOTER ============ */
   .site-footer{ background:#0F1B2D; color:#B7C1D6; padding:48px 0 30px; margin-top:20px }
@@ -412,7 +420,7 @@
       <a href="#shirokhorshid" class="quick-chip"><span class="dot" style="background:#B42318"></span>شیرخورشید</a>
       <a href="#rostam" class="quick-chip"><span class="dot" style="background:#8A3FFC"></span>رستم وی‌پی‌ان</a>
       <a href="#psiphon" class="quick-chip"><span class="dot" style="background:#0A6F6E"></span>سایفون</a>
-      <a href="#aetherst" class="quick-chip"><span class="dot" style="background:#334155"></span>ایتراست تانل</a>
+      <a href="#aetherst" class="quick-chip"><span class="dot" style="background:#334155"></span>ایزر اس تی تانل</a>
     </div>
   </div>
 </section>
@@ -462,6 +470,21 @@
       </div>
 
       <div class="steps-block no-title-gap">
+        <h4><svg width="16" height="16"><use href="#i-route"/></svg> آموزش استفاده از Mahsa NG — اتصال از طریق CDN Fronting</h4>
+        <ul class="emoji-steps">
+          <li><span class="emj">✅</span><span>تمام اجازه‌های لازم را به برنامه بدهید و همه درخواست‌ها را <b>Accept</b> کنید.</span></li>
+          <li><span class="emj">📂</span><span>از بالای منوی <b>F</b> را انتخاب کنید.</span></li>
+          <li><span class="emj">🔘</span><span>گزینه‌ی <b>Psiphon Only</b> (فقط سایفون) را فعال کنید و <b>Save</b> را بزنید.</span></li>
+          <li><span class="emj">🍔</span><span>منوی همبرگری گوشه‌ی بالا را انتخاب کنید و به پایین اسکرول کنید.</span></li>
+          <li><span class="emj">⚙️</span><span>گزینه‌ی <b>Psiphon Settings</b> (تنظیمات سایفون) را انتخاب کنید.</span></li>
+          <li><span class="emj">🌐</span><span>از قسمت <b>Protocol</b>، گزینه‌ی <b>cdn_fronting</b> را انتخاب کنید.</span></li>
+          <li><span class="emj">💾</span><span>دکمه‌ی <b>SAVE PSIPHON SETTING</b> را بزنید تا تنظیمات ذخیره شود.</span></li>
+          <li><span class="emj">🔙</span><span>به صفحه‌ی اول برگردید و روی دکمه‌ی دایره‌ای‌شکل که حرف <b>M</b> داخل آن است، کلیک کنید.</span></li>
+          <li><span class="emj">⏳</span><span>کمی صبر کنید؛ دکمه‌ی زردرنگ <b>psiphon connecting...</b> به سبز تغییر کرده و عبارت <b>psiphon connected!</b> نمایش داده می‌شود.</span></li>
+        </ul>
+      </div>
+
+      <div class="steps-block">
         <h4><svg width="16" height="16"><use href="#i-route"/></svg> آموزش کامل وارد کردن لینک ساب در V2rayNG یا Mahsa NG</h4>
         <ol class="steps">
           <li>برای گوشی‌های اندروید ۶ و ۷ فعال‌کردن گزینه‌ی <b>allowInsecure</b> در تنظیمات برنامه اجباری است؛ برای اندرویدهای بالاتر اختیاری است اما بهتر است فعال باشد.</li>
@@ -655,7 +678,18 @@
       </div>
 
       <div class="steps-block">
-        <h4><svg width="16" height="16"><use href="#i-route"/></svg> آموزش کامل دریافت کانفیگ و اتصال</h4>
+        <h4><svg width="16" height="16"><use href="#i-route"/></svg> راهنمای استفاده amneziavpn</h4>
+        <ol class="steps">
+          <li>پس از باز کردن برنامه، دکمه‌ی <b>Let's Get Started</b> در انتهای صفحه را انتخاب کنید.</li>
+          <li>گزینه‌ی <b>VPN by Amnezia</b> را انتخاب کنید و کمی صبر کنید.</li>
+          <li>گزینه‌ی <b>Amnezia Free</b> را انتخاب کنید، سپس دکمه‌ی <b>Continue</b> را بزنید.</li>
+          <li>کد امنیتی نمایش داده‌شده را وارد کرده و دوباره دکمه‌ی <b>Continue</b> را انتخاب کنید.</li>
+          <li>پس از صبر کردن، دکمه‌ی <b>Connect</b> را برای اتصال انتخاب کنید.</li>
+        </ol>
+      </div>
+
+      <div class="steps-block">
+        <h4><svg width="16" height="16"><use href="#i-route"/></svg> آموزش کامل دریافت کانفیگ و اتصال از طریق ربات تلگرام</h4>
         <ol class="steps">
           <li>ابتدا در کانال اطلاع‌رسانی امنزیا عضو شوید: <a href="https://t.me/amnezia_vpn_news_ir" target="_blank" rel="noopener">t.me/amnezia_vpn_news_ir</a></li>
           <li>پس از عضویت، وارد یکی از ربات‌های زیر شوید و درخواست کانفیگ دهید:
@@ -947,7 +981,7 @@
       <div class="app-head">
         <div class="app-badge" style="background:linear-gradient(145deg,#334155,#0F1B2D)">Ae</div>
         <div class="app-title-wrap">
-          <h3>ایتراست تانل <span class="en">AetherST Tunnel</span> <span class="version-tag">نسخه‌ی v1.4.2 b1</span></h3>
+          <h3>ایزر اس تی تانل <span class="en">AetherST Tunnel</span></h3>
           <p class="app-tagline">فیلترشکن رایگان و متن‌باز با قابلیت‌های پیشرفته، ویژه‌ی اندروید</p>
           <div class="platform-chips">
             <span class="chip"><svg width="14" height="14"><use href="#i-android"/></svg> اندروید ۸ تا ۱۶</span>
